@@ -1,6 +1,9 @@
 package Controleur;
 
-import Modele.*;
+import Modele.Connexion;
+import Modele.FilmDAOimpl;
+import Modele.ListPanel;
+import Modele.Personne;
 import Vue.*;
 
 import javax.swing.*;
@@ -283,23 +286,12 @@ public void Jlistener() {
 
                     // Création de la JList avec le modèle de liste
                     JList<String> filmList = new JList<>(listModel);
+                    ListPanel pan=new ListPanel(filmList);
+                    EspaceAdmin esp=new EspaceAdmin();
+                    esp.afficherTendances(filmList);
+                    frame.dispose();
 
-                    // Création d'un JScrollPane pour la JList
-                    //ListPanel pan=new ListPanel(filmList);
-                    JScrollPane scrollPane = new JScrollPane(filmList);
-                    //filmList.add(scrollPane, BorderLayout.CENTER);
 
-                    // Ajout du JScrollPane à votre JFrame
-                    frame.getContentPane().removeAll(); // Supprimer les composants existants de la fenêtre
-                    frame.getContentPane().add(scrollPane); // Ajouter la JList à la fenêtre
-
-                    // Actualiser l'affichage de la fenêtre
-                    frame.revalidate();
-                    frame.repaint();
-                    Bouton boutonRetour = new BoutonAppuie(0,0,50,50,"Retour");
-                    JButton boutonRetour1 = boutonRetour.CreaBouton();
-                    RecuperationBouton listener = new RecuperationBouton(boutonRetour1);
-                    listener.ButtonRetour(boutonRetour1,frame);
 
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
@@ -322,6 +314,15 @@ public void Jlistener() {
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+    }
+
+    public void ButtonRetourTendance(JButton bouton, JFrame frame){
+        bouton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EspaceAdmin espaceAdmin = new EspaceAdmin();
             }
         });
     }

@@ -12,7 +12,10 @@ public class ListPanel extends JPanel {
     JList<String> list;
 
     public ListPanel(JList<String> liste){
-        this.list=liste;
+        list = new JList<>();
+        list = liste;
+        JScrollPane scrollPane = new JScrollPane(list);
+        add(scrollPane, BorderLayout.CENTER);
     }
     public ListPanel() {
         list= new JList<>();

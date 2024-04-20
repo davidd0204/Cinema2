@@ -86,14 +86,14 @@ public class EspaceAdmin extends JFrame {
 
     }
 
-    public void afficherTendances (){
-        ListPanel liste=new ListPanel();
-        panel.add(liste,BorderLayout.NORTH);
-        RecuperationBouton Jliste=new RecuperationBouton(liste.listeJusteNom());
+    public void afficherTendances (JList<String> liste){
+        ListPanel nv_liste = new ListPanel(liste);
+        panel.add(nv_liste,BorderLayout.NORTH);
+        //RecuperationBouton Jliste=new RecuperationBouton(liste.listeJusteNom());
         Bouton boutonRetour = new BoutonAppuie(0,0,50,50,"Retour");
         JButton boutonRetour1 = boutonRetour.CreaBouton();
         RecuperationBouton listener = new RecuperationBouton(boutonRetour1);
-        listener.ButtonRetour(boutonRetour1,frame);
+        listener.ButtonRetourTendance(boutonRetour1,frame);
         buffer.add(boutonRetour1);
         buffer.setVisible(true);
         frame.add(buffer,BorderLayout.CENTER);
