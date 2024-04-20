@@ -45,12 +45,13 @@ public class Connexion {
         // Création d'une Statement pour exécuter d'autres requêtes si nécessaire
         stmt = conn.createStatement();
     }
-    public void suppFilm(String nom) throws SQLException {
-        String sqlSelect = "SELECT image_film FROM film WHERE nom_film = ?";
+    public void suppFilm(String nom,int heure) throws SQLException {
+        String sqlSelect = "SELECT image_film FROM film WHERE nom_film = ? AND heure = ?";
 
         // Utilisation d'un PreparedStatement pour éviter les problèmes de sécurité liés aux injections SQL
         PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
-        psSelect.setString(1, nom); // Lier le paramètre à la valeur
+        psSelect.setString(1, nom);
+        psSelect.setInt(2, heure);// Lier le paramètre à la valeur
 
         // Exécution de la requête et récupération du résultat
         ResultSet rs = psSelect.executeQuery();
@@ -187,7 +188,7 @@ public class Connexion {
                 String filmName = rs.getString("nom_film");
                     int filmheure = rs.getInt("heure");
                 // Format de chaque entrée : "Nom du film - Nombre de places - Prix"
-                String entry = filmName+ " - " + filmheure + "heures";
+                String entry = filmName+ " " + filmheure + " "+"heures";
                 listModel.addElement(entry);  // Ajout de l'entrée au modèle de liste
             }
 

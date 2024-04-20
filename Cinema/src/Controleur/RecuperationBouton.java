@@ -371,8 +371,8 @@ public void Jlistener() {
                             String[] parts = selectedName.split(" "); // Séparation par espace
                             if (parts.length >= 2) {
                                 String firstName = parts[0]; // Premier mot
-                                String lastName = parts[1]; // Deuxième mot
-                               sql.suppFilm(firstName);
+                                int heure = Integer.parseInt(parts[1]); // Deuxième mot
+                               sql.suppFilm(firstName,heure);
 
                             } else {
                                 System.out.println("Le nom sélectionné ne contient pas deux mots.");
