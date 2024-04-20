@@ -5,22 +5,27 @@ import Modele.Connexion;
 import java.sql.*;
 
 public class Film {
-    private int id_auteur;
+    private int id_film;
     private String nom_film;
     private String auteur;
     private int nbrplace;
     private String image_film;
+    private int prix_place;
+    private String resume;
+    private float note;
+    private int heure;
+
 
     public Film(String nom_film){
         this.nom_film=nom_film;
         try{
             Connection connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "");
-            String requete = "SELECT id_auteur, auteur, nbrplace, image_film FROM film WHERE nom_film = ?";
+            String requete = "SELECT id_film, auteur, nbrplace, image_film, prix_place, resume, note, heure FROM film WHERE nom_film = ?";
             PreparedStatement statement = ((Connection) connexion).prepareStatement(requete);
             statement.setString(1, nom_film);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                this.id_auteur = resultSet.getInt("id_auteur");
+                this.id_film = resultSet.getInt("id_film");
                 this.auteur = resultSet.getString("auteur");
                 this.nbrplace = resultSet.getInt("nbrplace");
                 this.image_film = resultSet.getString("image_film");
@@ -34,17 +39,22 @@ public class Film {
         }
     }
 
-    public Film(String nom_film, String auteur, int nbrplace, String image_film)
+    public Film(int id_film, String nom_film, String auteur, int nbrplace, String image_film, int prix_place, String resume, float note, int heure)
     {
         this.nom_film=nom_film;
         this.auteur=auteur;
         this.nbrplace=nbrplace;
         this.image_film=image_film;
+        this.id_film=id_film;
+        this.prix_place=prix_place;
+        this.resume=resume;
+        this.note=note;
+        this.heure=heure;
     }
 
-    public int getId_auteur()
+    public int getId_film()
     {
-        return id_auteur;
+        return id_film;
     }
     public String getNom_film()
     {

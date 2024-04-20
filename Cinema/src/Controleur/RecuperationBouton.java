@@ -1,6 +1,7 @@
 package Controleur;
 
 import Modele.Connexion;
+import Modele.FilmDAOimpl;
 import Modele.Personne;
 import Vue.*;
 
@@ -8,7 +9,10 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class RecuperationBouton {
     private JButton JB;
@@ -257,6 +261,46 @@ public void Jlistener() {
 
                 // Fermer la fenêtre de connexion
                 frame.dispose();
+            }
+        });
+    }
+
+    public void ButtonTendance(JButton bouttonTendance, JFrame frame){
+        bouttonTendance.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    //Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "");
+                    Connexion connect = new Connexion();
+                    FilmDAOimpl liste_tendance = new FilmDAOimpl();
+                    ArrayList<String> liste = new ArrayList<>();
+                    liste = connect.trierParNotes(liste_tendance);
+                    DefaultListModel<String> listModel = new DefaultListModel<>();
+
+                    // Ajout des noms des films triés au modèle de liste
+                    for (String film : liste) {
+                        listModel.addElement(film);
+                    }
+
+                    // Création de la JList avec le modèle de liste
+                    JList<String> filmList = new JList<>(listModel);
+
+                    // Création d'un JScrollPane pour la JList
+                    JScrollPane scrollPane = new JScrollPane(filmList);
+
+                    // Ajout du JScrollPane à votre JFrame
+                    frame.getContentPane().removeAll(); // Supprimer les composants existants de la fenêtre
+                    frame.getContentPane().add(scrollPane); // Ajouter la JList à la fenêtre
+
+                    // Actualiser l'affichage de la fenêtre
+                    frame.revalidate();
+                    frame.repaint();
+
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }

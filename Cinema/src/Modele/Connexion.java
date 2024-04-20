@@ -4,6 +4,7 @@ import Controleur.AfficherInterfaceConnexion;
 import Controleur.Generale;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.*;
 
@@ -380,5 +381,33 @@ public class Connexion {
                 throw new SQLException("Aucune mise à jour effectuée - vérifiez le titre ou la disponibilité des places.");
             }
         }
+    }
+
+    public ArrayList<String> trierParNotes(FilmDAOimpl f) throws SQLException
+    {
+        ArrayList<String> listeFilmsTrieParNotes = new ArrayList<>();
+        String sql = "SELECT id_film, nom_film, auteur, nbrplace, image_film, prix_place, resume, note, heure FROM film ORDER BY note DESC";
+        try(PreparedStatement statement = conn.prepareStatement(sql))
+        {
+            ResultSet resultSet = statement.executeQuery();
+            int i=0;
+            String  classement;
+            while(resultSet.next()){
+                i++;
+                classement = "N° " + i;
+                int id_film = resultSet.getInt("id_film");
+                String nom_film = resultSet.getString("nom_film");
+                String auteur = resultSet.getString("auteur");
+                int nbrplace = resultSet.getInt("nbrplace");
+                String image_film = resultSet.getString("image_film");
+                int prix_place = resultSet.getInt("prix_place");
+                String resume = resultSet.getString("resume");
+                float note = resultSet.getFloat("note");
+                int heure = resultSet.getInt("heure");
+                String total = classement + " " + nom_film + " " + auteur + " " + nbrplace + " " + prix_place + " " + note + " " + heure;
+                listeFilmsTrieParNotes.add(total);
+            }
+        }
+        return listeFilmsTrieParNotes;
     }
 }
