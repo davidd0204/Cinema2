@@ -360,7 +360,7 @@ public class Connexion {
             {
                 return false;
             }
-            //System.out.println(rs.getString("Utilisateur"));
+            System.out.println(rs.getString("Utilisateur"));
         }
         return true;
     }
