@@ -3,7 +3,9 @@ package Modele;
 import Controleur.AfficherInterfaceConnexion;
 import Controleur.EspaceAdmin;
 import Controleur.Generale;
+import Controleur.RecuperationBouton;
 
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -363,6 +365,31 @@ public class Connexion {
         espace.afficherInterfaceAdmin();
         frame.dispose();
     }
+    public void ModificationFilm(String film, String auteur, int nbPlace, String lienImage,int prix,String resume,float note, int horaire,String nomFilmBase, int heureFilmBase,JFrame frame) throws SQLException, ClassNotFoundException {
+        // Requête SQL pour mettre à jour le film
+        String sql = "UPDATE film SET nom_film=?,auteur=?,nbrplace=?,image_film=?,prix_place=?,resume=?,note=?,heure=?  WHERE nom_film = ? AND heure=?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, film);   // Titre du film
+            ps.setString(2, auteur);      // auteur du film
+            ps.setInt(3, nbPlace);        // le nb de place
+            ps.setString(4, lienImage);   // lien de l'image
+            ps.setInt(5,prix); // prix du film
+            ps.setString(6,resume); // resume du film
+            ps.setFloat(7,note);   // note du film
+            ps.setInt(8,horaire);  // horaire du film
+            ps.setString(9,nomFilmBase); // comparaison avec nom de base
+            ps.setInt(10,heureFilmBase); // et heure de base
+            int affectedRows = ps.executeUpdate();  // variable qui permet de vérifié si elle a été mise a jour ou non
+            if (affectedRows == 0) {
+                // Aucune ligne affectée signifie que soit le film n'existe pas, soit il n'y avait pas assez de places
+                throw new SQLException("Aucune mise à jour effectuée - vérifiez le titre ou la disponibilité des places.");
+            }
+        }
+        EspaceAdmin espace= new EspaceAdmin();
+        espace.afficherInterfaceAdmin();
+        frame.dispose();
+    }
     public boolean verificationInscription(String nom, String prenom, int age, String password, String confirmationPassword){
         /*System.out.println("nom: "+nom);
         System.out.println("prenom: "+prenom);
@@ -470,20 +497,157 @@ public class Connexion {
         }
         return listeFilmsTrieParNotes;
     }
-    public void modifierFilm(String nomFilm, int heure1) throws SQLException {
+    public void modifierFilm(String nomFilm, int heure1,JFrame ancienFrame) throws SQLException {
         //String sql = "UPDATE film SET nom_film=?,auteur=?,nbrplace=?,image_film=?,prix_place=?,resume=?,note=?,heure=?  WHERE nom_film = nomFilm AND heure= heure1";
-        String sqlSelect = "SELECT * FROM film WHERE nom_film = nomFilm AND heure = heure1";
+        String sqlSelect = "SELECT * FROM film WHERE nom_film = ? AND heure = ?";
+        int nouv;
+        String nom = null,auteur=null,lien=null,resume=null;
+        int nbplace=0,prix=0,heure=0;
+        float note=0;
 
-        int nouv = 0;
         try {
             // Utilisation d'un PreparedStatement pour éviter les problèmes de sécurité liés aux injections SQL
-            PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
+            PreparedStatement ps = conn.prepareStatement(sqlSelect);
+            ps.setString(1,nomFilm);
+            ps.setInt(2,heure1);
             // Exécution de la requête et récupération du résultat
-            ResultSet rs = psSelect.executeQuery();
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                nouv = rs.getInt("userId");
-                System.out.println("NOUVADSQSD: "+nouv);
+                nom = rs.getString("nom_film");
+                auteur=rs.getString("auteur");
+                nbplace=rs.getInt("nbrplace");
+                lien=rs.getString("image_film");
+                prix=rs.getInt("prix_place");
+                resume=rs.getString("resume");
+                note=rs.getFloat("note");
+                heure=rs.getInt("heure");
+                System.out.println("PLACE: "+nbplace+" PRIX: "+prix+" HEURE: "+heure);
+            }else {}
+            JFrame frame = new JFrame("Modification Film");
+            frame.setSize(450,500);
+            frame.setLocationRelativeTo(ancienFrame);
+            JPanel panel=new JPanel();
+            panel.setLayout(null);
+            panel.setBackground(new Color(173, 216, 230));
+            frame.add(panel);
+
+            JLabel label1=new JLabel("Formulaire d'ajouter un film");
+            label1.setBounds(60,10,300,30);
+            label1.setFont(new Font("Arial",Font.BOLD,22));
+            label1.setForeground(new Color(64, 64, 64));
+            panel.add(label1);
+
+            JLabel label2=new JLabel("Nom du film :");
+            label2.setBounds(20,60,300,30);
+            label2.setFont(new Font("Arial",Font.BOLD,18));
+            label2.setForeground(new Color(64, 64, 64));
+            panel.add(label2);
+
+            JTextField text1=new JTextField(nom);
+            text1.setBounds(190,60,200,25);
+            panel.add(text1);
+
+            JLabel label3=new JLabel("Auteur du film :");
+            label3.setBounds(20,100,300,30);
+            label3.setFont(new Font("Arial",Font.BOLD,18));
+            label3.setForeground(new Color(64, 64, 64));
+            panel.add(label3);
+
+            JTextField text2=new JTextField(auteur);
+            text2.setBounds(190,100,200,25);
+            panel.add(text2);
+
+            JLabel label4=new JLabel("Nombre de place :");
+            label4.setBounds(20,140,300,30);
+            label4.setFont(new Font("Arial",Font.BOLD,18));
+            label4.setForeground(new Color(64, 64, 64));
+            panel.add(label4);
+
+            JTextField text3=new JTextField(String.valueOf(nbplace));
+            text3.setBounds(190,140,200,25);
+            panel.add(text3);
+
+            JLabel label5=new JLabel("Lien de l'image :");
+            label5.setBounds(20,180,300,30);
+            label5.setFont(new Font("Arial",Font.BOLD,18));
+            label5.setForeground(new Color(64, 64, 64));
+            panel.add(label5);
+
+            JTextField text4=new JTextField(lien);
+            text4.setBounds(190,180,200,25);
+            panel.add(text4);
+
+            JLabel label6=new JLabel("Prix du billet :");
+            label6.setBounds(20,220,300,30);
+            label6.setFont(new Font("Arial",Font.BOLD,18));
+            label6.setForeground(new Color(64, 64, 64));
+            panel.add(label6);
+
+            JTextField text5=new JTextField(String.valueOf(prix));
+            text5.setBounds(190,220,200,25);
+            panel.add(text5);
+
+            JLabel label7=new JLabel("Résumé du film :");
+            label7.setBounds(20,260,300,30);
+            label7.setFont(new Font("Arial",Font.BOLD,18));
+            label7.setForeground(new Color(64, 64, 64));
+            panel.add(label7);
+
+            JTextField text6=new JTextField(resume);
+            text6.setBounds(190,260,200,25);
+            panel.add(text6);
+
+            JLabel label8=new JLabel("Note du film :");
+            label8.setBounds(20,300,300,30);
+            label8.setFont(new Font("Arial",Font.BOLD,18));
+            label8.setForeground(new Color(64, 64, 64));
+            panel.add(label8);
+
+            JTextField text7=new JTextField(String.valueOf(note));
+            text7.setBounds(190,300,200,25);
+            panel.add(text7);
+
+            JLabel label9=new JLabel("Horaire du film :");
+            label9.setBounds(20,340,300,30);
+            label9.setFont(new Font("Arial",Font.BOLD,18));
+            label9.setForeground(new Color(64, 64, 64));
+            panel.add(label9);
+
+            JComboBox comboBoxHoraire=new JComboBox();
+            comboBoxHoraire.setBounds(190,340,200,25);
+            for (int i = 1; i <= 24; i++) {
+                if(i==heure) {
+
+                }
+                else{
+                    comboBoxHoraire.addItem(i);
+                }
             }
+            panel.add(comboBoxHoraire);
+
+            Bouton boutonEnregistrer = new BoutonAppuie(0,0,50,50,"Enregister");
+            JButton boutonEnregister1 = boutonEnregistrer.CreaBouton();
+            boutonEnregister1.setBounds(30,390,150,30);
+            boutonEnregister1.setBackground(Color.orange);
+            boutonEnregister1.setFont(new Font("Arial",Font.BOLD,18));
+            boutonEnregister1.setForeground(new Color(64, 64, 64));
+            RecuperationBouton listener1 = new RecuperationBouton(boutonEnregister1); // Création de l'écouteur avec le bouton
+            listener1.ButtonEnregistrerFilm2(boutonEnregister1,text1,text2,text3,text4,text5,text6,text7,comboBoxHoraire,nomFilm,heure1,frame);
+            panel.add(boutonEnregister1);
+
+            Bouton boutonRetour = new BoutonAppuie(0,0,50,50,"Retour");
+            JButton boutonRetour1 = boutonRetour.CreaBouton();
+            boutonRetour1.setBounds(210,390,150,30);
+            boutonRetour1.setBackground(Color.orange);
+            boutonRetour1.setFont(new Font("Arial",Font.BOLD,18));
+            boutonRetour1.setForeground(new Color(64, 64, 64));
+            RecuperationBouton listener2 = new RecuperationBouton(boutonRetour1); // Création de l'écouteur avec le bouton
+            listener2.ButtonRetourPageAdmin(boutonRetour1,frame);
+            panel.add(boutonRetour1);
+
+
+            frame.setVisible(true);
+
         } catch (SQLException e) {
             System.out.println("Erreur SQL : " + e.getMessage());
             throw e; // Propager l'exception après la journalisation
