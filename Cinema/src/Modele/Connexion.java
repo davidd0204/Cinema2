@@ -189,7 +189,7 @@ public class Connexion {
                 String filmName = rs.getString("nom_film");
                     int filmheure = rs.getInt("heure");
                 // Format de chaque entrée : "Nom du film - Nombre de places - Prix"
-                String entry = filmName+ " " + filmheure + " "+"heures";
+                String entry = filmName+ "-" + filmheure + "-"+"heures";
                 listModel.addElement(entry);  // Ajout de l'entrée au modèle de liste
             }
 

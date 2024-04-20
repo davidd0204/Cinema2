@@ -61,7 +61,7 @@ public class EspaceAdmin extends JFrame {
         Bouton boutonmodif = new BoutonAppuie(0,0,50,50,"Modifier");
         JButton boutonmod = boutonmodif.CreaBouton();
         RecuperationBouton listenersmod = new RecuperationBouton(boutonmod);
-        listenersmod.setupComponents2(liste.listeJusteNom(),boutonmod,frame);
+        ///listenersmod.setupComponents2(liste.listeJusteNom(),boutonmod,frame);
 
         Bouton boutontop = new BoutonAppuie(0,0,50,50,"Tendances");
         JButton boutontendence = boutontop.CreaBouton();
