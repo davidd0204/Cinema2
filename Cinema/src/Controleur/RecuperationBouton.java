@@ -154,7 +154,7 @@ public void Jlistener() {
                 try {
                     Connexion v = new Connexion();
                     if(v.verificationInscription(nomUtilisateur,prenomUtilisateur,age,mdp,confirmMDP)){
-                        if(v.verificationDoublons(nomUtilisateur)) {
+                        if(v.verificationDoublonsInscription(nomUtilisateur)) {
                             v.InscriptionBDD(nomUtilisateur, prenomUtilisateur, age, mdp, frame);
                         }
                         else{
@@ -169,6 +169,19 @@ public void Jlistener() {
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+    }
+    public void ButtonAjouterFilm(JButton boutonAjouterFilm, JFrame frame){
+        boutonAjouterFilm.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Code à exécuter lorsque le bouton de connexion est cliqué
+                frame.dispose(); // Fermer la fenêtre actuelle
+                //AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
+                //a.FormulaireInscription(frame);
+                // Afficher l'interface de saisie utilisateur et mot de passe
+
+                // CODE D'INSCRIPTION ICI
             }
         });
     }

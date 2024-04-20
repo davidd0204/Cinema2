@@ -350,7 +350,7 @@ public class Connexion {
             return true;
         }
     }
-    public boolean verificationDoublons(String Utilisateur) throws SQLException{
+    public boolean verificationDoublonsInscription(String Utilisateur) throws SQLException{
         PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user");
         ResultSet rs = ps1.executeQuery();
         String UtilisateurBDD;
