@@ -13,9 +13,9 @@ public class Connexion {
     public int getnbrplace;
     String databaseName="Cinema";
     String username="root";
-    String password="";
+    //String password="";
 
-   /// String password="Jack123456";
+    String password="Jack123456";
 
 
     public Connexion() throws SQLException, ClassNotFoundException {

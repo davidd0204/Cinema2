@@ -170,7 +170,7 @@ public class Generale extends JFrame {
             }*/
           ////  Acceuil.getbuffer().add(comboBoxAge);
 
-            box=Acceuil.ajoutercombo(box);;
+            //box=Acceuil.ajoutercombo(box);;
             listener3.ajouterListenernbrfilm(field,Acceuil,field2,personne,box);
             Acceuil.ajoutertext("Indiquer l'heure ");
             listener2.ajouterListener2(field,Acceuil,box);
