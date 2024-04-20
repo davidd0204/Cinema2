@@ -154,7 +154,12 @@ public void Jlistener() {
                 try {
                     Connexion v = new Connexion();
                     if(v.verificationInscription(nomUtilisateur,prenomUtilisateur,age,mdp,confirmMDP)){
-                        v.InscriptionBDD(nomUtilisateur,prenomUtilisateur,age,mdp,frame);
+                        if(v.verificationDoublons(nomUtilisateur)) {
+                            v.InscriptionBDD(nomUtilisateur, prenomUtilisateur, age, mdp, frame);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Utilisateur déjà existant.", "Erreur d'inscription", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs de l'inscription,\n Le mot de passe doit être identique à la confirmation.", "Erreur d'inscription", JOptionPane.ERROR_MESSAGE);

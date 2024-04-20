@@ -314,24 +314,19 @@ public class Connexion {
         return nouv;
         }
     public void InscriptionBDD(String nom, String prenom, int age, String password,JFrame frame) throws SQLException, ClassNotFoundException {
-        Generale g = new Generale();
         conn.setAutoCommit(false);
         PreparedStatement ps = conn.prepareStatement("INSERT INTO user (Utilisateur,mdp,type) VALUES (?,?,?)");
         ps.setString(1,nom);
         ps.setString(2,password);
-        int type;
         if (age >= 18 && age <= 64) {
             System.out.println("Le client est régulier.");
             ps.setInt(3,3);
-            type = 3;
         } else if (age >= 65) {
             System.out.println("Le client est senior.");
             ps.setInt(3,4);
-            type = 4;
         } else {
             System.out.println("Le client est un enfant.");
             ps.setInt(3,2);
-            type = 2;
         }
         ps.executeUpdate();
 
@@ -354,6 +349,20 @@ public class Connexion {
         else {
             return true;
         }
+    }
+    public boolean verificationDoublons(String Utilisateur) throws SQLException{
+        PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user");
+        ResultSet rs = ps1.executeQuery();
+        String UtilisateurBDD;
+        while(rs.next()){
+            UtilisateurBDD = rs.getString("Utilisateur");
+            if(Utilisateur.equals(UtilisateurBDD))
+            {
+                return false;
+            }
+            //System.out.println(rs.getString("Utilisateur"));
+        }
+        return true;
     }
     public void decrementerPlaces(String nomFilm, int placesVendues, Integer heure) throws SQLException {
         // Requête SQL pour mettre à jour le nombre de places
