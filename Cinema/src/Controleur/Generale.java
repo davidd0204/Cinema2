@@ -127,7 +127,7 @@ public class Generale extends JFrame {
             Acceuil.getPanel().add(bouton, BorderLayout.NORTH);
 
 
-            Bouton recherche=new BoutonRecherche(0,0,50,50,"recherche");
+            Bouton recherche=new BoutonRecherche(0,0,50,50,"Recherche");
             JButton bouton1=recherche.CreaBouton();
             Acceuil.ajouterbouton(bouton1,0,0,120,20);
             Acceuil.getPanel().add(bouton1, BorderLayout.WEST);
