@@ -51,6 +51,7 @@ public class EspaceAdmin extends JFrame {
         JButton boutonajout1 = boutonajout.CreaBouton();
         RecuperationBouton listener2 = new RecuperationBouton(boutonajout1);
 
+
         Bouton boutonsupp = new BoutonAppuie(0,0,50,50,"Supprimer");
         JButton boutonsupp1 = boutonsupp.CreaBouton();
         RecuperationBouton listenersupp = new RecuperationBouton(boutonsupp1);
