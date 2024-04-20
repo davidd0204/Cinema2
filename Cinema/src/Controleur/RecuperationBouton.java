@@ -217,6 +217,38 @@ public void Jlistener() {
             }
         });
     }
+    public void ButtonEnregistrerFilm2(JButton boutonEnregistrerFilm,JTextField film, JTextField auteur,JTextField nbPlace, JTextField lienImage, JTextField prix, JTextField resume, JTextField note,JComboBox comboBoxHoraire,String nomFilmBase, int heureFilmBase,JFrame frame){
+        boutonEnregistrerFilm.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Integer selectedOption = (Integer) comboBoxHoraire.getSelectedItem();
+                String nomFilm = film.getText();
+                String auteurFilm = auteur.getText();
+                String nbPlaceFilm = nbPlace.getText();
+                String lienImageFilm = lienImage.getText();
+                String prixFilm = prix.getText();
+                String resumeFilm = resume.getText();
+                String noteFilm = note.getText();
+                int horaire = selectedOption;
+
+                try {
+                    Connexion v = new Connexion();
+                    if(v.verificationInscriptionFilm(nomFilm,auteurFilm,nbPlaceFilm,lienImageFilm,prixFilm,resumeFilm,noteFilm)){
+                        int nbPlaceFilm1 = Integer.parseInt(nbPlace.getText());
+                        int prixFilm1 = Integer.parseInt(prix.getText());
+                        float noteFilm1 = Float.parseFloat(note.getText());
+                        v.ModificationFilm(nomFilm,auteurFilm,nbPlaceFilm1,lienImageFilm,prixFilm1,resumeFilm,noteFilm1,horaire,nomFilmBase,heureFilmBase,frame);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs pour pouvoir ajouter un film.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+    }
     public void ButtonAjouterFilm(JButton boutonAjouterFilm, JFrame frame){
         boutonAjouterFilm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -471,22 +503,23 @@ public void Jlistener() {
                         Connexion sql = new Connexion();
                         // Décommentez la ligne suivante pour supprimer le film sélectionné de la base de données
                         // sql.suppFilm(selectedName);
-                        JOptionPane.showMessageDialog(null, "Action effectuée pour : " + selectedName);
-                        frame.dispose();
+                        //JOptionPane.showMessageDialog(null, "Action effectuée pour : " + selectedName);
+                        //frame.dispose();
                         if (selectedName != null && !selectedName.isEmpty()) {
                             String[] parts = selectedName.split("-"); // Séparation par espace
                             if (parts.length >= 2) {
                                 String firstName = parts[0]; // Premier mot
                                 int heure = Integer.parseInt(parts[1]); // Deuxième mot
                                 //sql.suppFilm(firstName,heure);
-                                //sql.modifierFilm(firstName,heure);
+                                sql.modifierFilm(firstName,heure,frame);
+                                frame.dispose();
                             } else {
                                 System.out.println("Le nom sélectionné ne contient pas deux mots.");
                             }
                         }
 
-                        EspaceAdmin espace = new EspaceAdmin();
-                        espace.afficherInterfaceAdmin();
+                        //EspaceAdmin espace = new EspaceAdmin();
+                        //espace.afficherInterfaceAdmin();
                     } catch (SQLException | ClassNotFoundException ex) {
                         JOptionPane.showMessageDialog(null, "Error connecting to database: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
                         ex.printStackTrace(); // Considérez de loguer ceci de manière appropriée
