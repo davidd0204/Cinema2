@@ -178,11 +178,52 @@ public void Jlistener() {
             }
         });
     }
+
+    public void ButtonEnregistrerFilm(JButton boutonEnregistrerFilm,JTextField film, JTextField auteur,JTextField nbPlace, JTextField lienImage, JTextField prix, JTextField resume, JTextField note,JComboBox comboBoxHoraire,JFrame frame){
+        boutonEnregistrerFilm.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Integer selectedOption = (Integer) comboBoxHoraire.getSelectedItem();
+                String nomFilm = film.getText();
+                String auteurFilm = auteur.getText();
+                String nbPlaceFilm = nbPlace.getText();
+                String lienImageFilm = lienImage.getText();
+                String prixFilm = prix.getText();
+                String resumeFilm = resume.getText();
+                String noteFilm = note.getText();
+                int horaire = selectedOption;
+
+                try {
+                    Connexion v = new Connexion();
+                    if(v.verificationInscriptionFilm(nomFilm,auteurFilm,nbPlaceFilm,lienImageFilm,prixFilm,resumeFilm,noteFilm)){
+                        if(v.verificationDoublonsInscriptionFilm(nomFilm,horaire)) {
+                            int nbPlaceFilm1 = Integer.parseInt(nbPlace.getText());
+                            int prixFilm1 = Integer.parseInt(prix.getText());
+                            int noteFilm1 = Integer.parseInt(note.getText());
+
+                            v.InscriptionBDDFilm(nomFilm,auteurFilm,nbPlaceFilm1,lienImageFilm,prixFilm1,resumeFilm,noteFilm1,horaire,frame);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Film déjà existant à cette horaire,\n Veuillez changer d'horaire.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs pour pouvoir ajouter un film.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+    }
     public void ButtonAjouterFilm(JButton boutonAjouterFilm, JFrame frame){
         boutonAjouterFilm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Code à exécuter lorsque le bouton de connexion est cliqué
                 frame.dispose(); // Fermer la fenêtre actuelle
+                FormulaireAjouterFilm addFilm = new FormulaireAjouterFilm();
+                addFilm.AfficherFormulaireAjouterFilm(frame);
                 //AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
                 //a.FormulaireInscription(frame);
                 // Afficher l'interface de saisie utilisateur et mot de passe
@@ -220,6 +261,7 @@ public void Jlistener() {
                     v.verifierDisponibiliteFilm(utilisateur,motDePasse);
                     if(v.verifierDisponibiliteFilm(utilisateur, motDePasse))
                     {
+                        frame.dispose();
                         System.out.println("yep");
                         type=v.getType(utilisateur,motDePasse);
                         int id=v.getID(utilisateur,motDePasse);
@@ -236,7 +278,8 @@ public void Jlistener() {
 
                     }
                     else{
-                        a.afficherInfosErreur(frame);
+                        JOptionPane.showMessageDialog(null, "Le nom d'utilisateur ou le mot de passe saisi est incorrect..", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+                        //a.afficherInfosErreur(frame);
                     }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
@@ -262,7 +305,7 @@ public void Jlistener() {
                 }*/
 
                 // Fermer la fenêtre de connexion
-                frame.dispose();
+                //frame.dispose();
             }
         });
     }
@@ -333,6 +376,19 @@ public void Jlistener() {
             public void actionPerformed(ActionEvent e) {
                 AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
                 a.afficherInterfaceConnexion(frame);
+                // Fermer la fenêtre des informations utilisateur
+                frame.dispose();
+
+                // Afficher à nouveau la fenêtre principale
+                //frame.setVisible(true);
+            }
+        });
+    }
+    public void ButtonRetourPageAdmin(JButton boutonRetourPageAdmin, JFrame frame){
+        boutonRetourPageAdmin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                EspaceAdmin espace= new EspaceAdmin();
+                espace.afficherInterfaceAdmin();
                 // Fermer la fenêtre des informations utilisateur
                 frame.dispose();
 

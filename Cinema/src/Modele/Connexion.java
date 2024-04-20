@@ -1,6 +1,7 @@
 package Modele;
 
 import Controleur.AfficherInterfaceConnexion;
+import Controleur.EspaceAdmin;
 import Controleur.Generale;
 
 import java.sql.*;
@@ -339,6 +340,27 @@ public class Connexion {
         a.afficherInterfaceConnexion(frame);
         frame.dispose();
     }
+
+    public void InscriptionBDDFilm(String film, String auteur, int nbPlace, String lienImage,int prix,String resume,int note, int horaire,JFrame frame) throws SQLException, ClassNotFoundException {
+        conn.setAutoCommit(false);
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO film (nom_film,auteur,nbrplace,image_film,prix_place,resume,note,heure) VALUES (?,?,?,?,?,?,?,?)");
+        ps.setString(1,film);
+        ps.setString(2,auteur);
+        ps.setInt(3,nbPlace);
+        ps.setString(4,lienImage);
+        ps.setInt(5,prix);
+        ps.setString(6,resume);
+        ps.setInt(7,note);
+        ps.setInt(8,horaire);
+        ps.executeUpdate();
+
+        //Validation la transaction
+        conn.commit();
+        System.out.println("Transactions réussies, le film a été ajoutés avec succès à la base de données.");
+        EspaceAdmin espace= new EspaceAdmin();
+        espace.afficherInterfaceAdmin();
+        frame.dispose();
+    }
     public boolean verificationInscription(String nom, String prenom, int age, String password, String confirmationPassword){
         /*System.out.println("nom: "+nom);
         System.out.println("prenom: "+prenom);
@@ -346,6 +368,14 @@ public class Connexion {
         System.out.println("password: "+password);
         System.out.println("confirmerPassword: "+confirmationPassword);*/
         if(nom.isEmpty() || prenom.isEmpty() || password.isEmpty() || confirmationPassword.isEmpty() || !password.equals(confirmationPassword)){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    public boolean verificationInscriptionFilm(String film, String auteur,String nbPlace, String lienImage, String prix, String resume, String note){
+        if(film.isEmpty() || auteur.isEmpty() || nbPlace.isEmpty() || lienImage.isEmpty() || prix.isEmpty() || resume.isEmpty() || note.isEmpty()){
             return false;
         }
         else {
@@ -364,6 +394,33 @@ public class Connexion {
             }
             System.out.println(rs.getString("Utilisateur"));
         }
+        return true;
+    }
+    public boolean verificationDoublonsInscriptionFilm(String film, int horaire) throws SQLException{
+        String sql = "SELECT id_film FROM film WHERE nom_film = ? AND heure = ?";
+
+        int resultat = 0;
+        try {
+            // Utilisation d'un PreparedStatement pour éviter les problèmes de sécurité liés aux injections SQL
+            PreparedStatement psSelect = conn.prepareStatement(sql);
+            psSelect.setString(1, film);
+            psSelect.setInt(2, horaire);
+
+            // Exécution de la requête et récupération du résultat
+            ResultSet rs = psSelect.executeQuery();
+            if (rs.next()) {
+                resultat = rs.getInt("id_film");
+                System.out.println("Resultat Ajouter un film: ID_Film "+resultat);
+                return false;
+                //// System.out.println("Nombre de places disponibles pour le film " + nomFilm + " (" + idFilm + "): " + nbrPlaceDisponible);
+                // Compare le nombre de places attendu avec le nombre disponible
+                /////return nbrPlaceDisponible == nombrePlceAttendu;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL : " + e.getMessage());
+            throw e; // Propager l'exception après la journalisation
+        }
+
         return true;
     }
     public void decrementerPlaces(String nomFilm, int placesVendues, Integer heure) throws SQLException {

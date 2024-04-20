@@ -8,45 +8,90 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AfficherInterfaceConnexion {
-    public void afficherInterfaceConnexion(JFrame frame) {
-        JFrame frameConnexion = new JFrame("Connexion");
+    public void afficherInterfaceConnexion(JFrame ancienFrame) {
+        JFrame frame = new JFrame("ECE CINEMA");
+        frame.setSize(400,250);
+        frame.setLocationRelativeTo(ancienFrame);
+        JPanel panel=new JPanel();
+        panel.setLayout(null);
+        panel.setBackground(new Color(173, 216, 230));
+        frame.add(panel);
+
+        JLabel label1=new JLabel("Interface de connexion");
+        label1.setBounds(60,10,300,30);
+        label1.setFont(new Font("Arial",Font.BOLD,22));
+        label1.setForeground(new Color(64, 64, 64));
+        panel.add(label1);
+
+        JLabel label2=new JLabel("Utilisateur :");
+        label2.setBounds(20,60,300,30);
+        label2.setFont(new Font("Arial",Font.BOLD,18));
+        label2.setForeground(new Color(64, 64, 64));
+        panel.add(label2);
+
+        JTextField text1=new JTextField();
+        text1.setBounds(160,60,200,25);
+        panel.add(text1);
+
+        JLabel label3=new JLabel("Mot de passe :");
+        label3.setBounds(20,100,300,30);
+        label3.setFont(new Font("Arial",Font.BOLD,18));
+        label3.setForeground(new Color(64, 64, 64));
+        panel.add(label3);
+
+        JPasswordField text2=new JPasswordField();
+        text2.setBounds(160,100,200,25);
+        panel.add(text2);
+
+        /*JFrame frameConnexion = new JFrame("Connexion");
         frameConnexion.setSize(450, 300);
         frameConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameConnexion.setLayout(new GridLayout(4, 1));
+        frameConnexion.setLayout(new GridLayout(4, 1));*/
 
         // Positionner la nouvelle fenêtre par rapport à la fenêtre principale
-        frameConnexion.setLocationRelativeTo(frame);
+        //frameConnexion.setLocationRelativeTo(frame);
 
         // Ajouter des champs de saisie pour l'utilisateur et le mot de passe
-        JTextField champUtilisateur = new JTextField();
-        JPasswordField champMotDePasse = new JPasswordField();
+      //  JTextField champUtilisateur = new JTextField();
+        //JPasswordField champMotDePasse = new JPasswordField();
 
         // Créer le bouton de validation
         Bouton boutonValider = new BoutonAppuie(0,0,50,50,"Valider");
         JButton boutonValider1 = boutonValider.CreaBouton();
+        boutonValider1.setBounds(30,150,150,30);
+        boutonValider1.setBackground(Color.orange);
+        boutonValider1.setFont(new Font("Arial",Font.BOLD,18));
+        boutonValider1.setForeground(new Color(64, 64, 64));
         RecuperationBouton listener1 = new RecuperationBouton(boutonValider1); // Création de l'écouteur avec le bouton
-        listener1.ButtonValider(boutonValider1,champUtilisateur,champMotDePasse,frameConnexion);
+        listener1.ButtonValider(boutonValider1,text1,text2,frame);
+        panel.add(boutonValider1);
 
         // Ajouter les composants à la fenêtre de connexion
-        frameConnexion.add(new JLabel("Utilisateur:"));
+       /* frameConnexion.add(new JLabel("Utilisateur:"));
         frameConnexion.add(champUtilisateur);
         frameConnexion.add(new JLabel("Mot de passe:"));
         frameConnexion.add(champMotDePasse);
-        frameConnexion.add(boutonValider1);
+        frameConnexion.add(boutonValider1);*/
 
         Bouton boutonRetour = new BoutonAppuie(0,0,50,50,"Retour");
         JButton boutonRetour1 = boutonRetour.CreaBouton();
+        boutonRetour1.setBounds(210,150,150,30);
+        boutonRetour1.setBackground(Color.orange);
+        boutonRetour1.setFont(new Font("Arial",Font.BOLD,18));
+        boutonRetour1.setForeground(new Color(64, 64, 64));
         RecuperationBouton listener2 = new RecuperationBouton(boutonRetour1); // Création de l'écouteur avec le bouton
-        listener2.ButtonRetour(boutonRetour1,frameConnexion);
-
+        listener2.ButtonRetour(boutonRetour1,frame);
+        panel.add(boutonRetour1);
         // Ajouter le bouton de retour à la fenêtre des informations utilisateur
-        frameConnexion.add(boutonRetour1);
+        //frameConnexion.add(boutonRetour1);
 
 
         // Rendre la fenêtre de connexion visible
-        frameConnexion.setVisible(true);
+        //frameConnexion.setVisible(true);
+
+        frame.setVisible(true);
     }
-    public void afficherInfosErreur(JFrame frame){
+    /*public void afficherInfosErreur(JFrame frame){
         JFrame frameInfos = new JFrame("Erreur");
         frameInfos.setSize(450, 300);
         frameInfos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +114,7 @@ public class AfficherInterfaceConnexion {
 
         // Rendre la fenêtre des informations utilisateur visible
         frameInfos.setVisible(true);
-    }
+    }*/
     public void FormulaireInscription(JFrame ancienFrame){
         //int age;
         JFrame frame = new JFrame("Inscription");
