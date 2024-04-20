@@ -119,21 +119,31 @@ public class Generale extends JFrame {
             RecuperationList listen =new RecuperationList(Liste);
             listen.ajouterListen(Liste);
             Acceuil=new Page(Liste);
-            Bouton appuie=new BoutonAppuie(0,0,50,50,"accueil");
+            Bouton appuie=new BoutonAppuie(0,0,50,50,"Accueil");
             JButton bouton = appuie.CreaBouton(); // Création du bouton
             Acceuil.ajouterbouton(bouton,0,0,120,50); // Ajout du bouton à la page
             RecuperationBouton listener=new RecuperationBouton(bouton); // Création de l'écouteur avec le bouton
             listener.ajouterListener(Acceuil);
-            Acceuil.getPanel().add(bouton, BorderLayout.NORTH);
+            Acceuil.getacc().add(bouton);
 
 
-            Bouton recherche=new BoutonRecherche(0,0,50,50,"recherche");
+            Bouton facture=new BoutonAppuie(0,0,50,50,"Facture");
+            JButton fact = facture.CreaBouton(); // Création du bouton
+            Acceuil.ajouterbouton(fact,0,0,120,50); // Ajout du bouton à la page
+            RecuperationBouton listenerfact=new RecuperationBouton(fact); // Création de l'écouteur avec le bouton
+           /// listener.ajouterListener(Acceuil);
+            Acceuil.getacc().add(fact);
+            Acceuil.getacc().setVisible(true);
+            Acceuil.getPanel().add(Acceuil.getacc(),BorderLayout.NORTH);
+
+
+            Bouton recherche=new BoutonRecherche(0,0,50,50,"Recherche");
             JButton bouton1=recherche.CreaBouton();
             Acceuil.ajouterbouton(bouton1,0,0,120,20);
             Acceuil.getPanel().add(bouton1, BorderLayout.WEST);
             Acceuil.getListPanel().setVisible(true);
             Acceuil.getPanel().add(Acceuil.getListPanel(), BorderLayout.WEST);
-            Bouton recherche2=new BoutonRecherche(0,0,50,50,"CalculerPrix");
+            Bouton recherche2=new BoutonRecherche(0,0,50,50,"Calculer Prix");
             JButton bouton2=recherche2.CreaBouton();
             Acceuil.ajouterbouton(bouton2,0,0,120,20);
 
@@ -170,7 +180,7 @@ public class Generale extends JFrame {
             }*/
           ////  Acceuil.getbuffer().add(comboBoxAge);
 
-            //box=Acceuil.ajoutercombo(box);;
+          ////  box=Acceuil.ajoutercombo(box);;
             listener3.ajouterListenernbrfilm(field,Acceuil,field2,personne,box);
             Acceuil.ajoutertext("Indiquer l'heure ");
             listener2.ajouterListener2(field,Acceuil,box);

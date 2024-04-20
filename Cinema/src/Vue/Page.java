@@ -11,6 +11,7 @@ public class Page extends JFrame {
     int y;
     JPanel panel;
     JPanel buffer2;
+    JPanel acc;
     JFrame frame;
     JPanel buffer,bufferText;
     ListPanel pan;
@@ -24,6 +25,7 @@ public class Page extends JFrame {
         panel=(JPanel) this.getContentPane();
         buffer=new JPanel();
         buffer2=new JPanel();
+        acc=new JPanel();
          nameList = new JList<>();
          pan = new ListPanel();
          bufferText=new JPanel();
@@ -47,6 +49,7 @@ public class Page extends JFrame {
 // Créer un panel sans marge interne
         ////panel.setBorder(BorderFactory.createEmptyBorder());
         buffer2.setLayout(new GridLayout(3, 2));
+        acc.setLayout(new GridLayout(1, 2));
 
         ////frame.add(buffer2);
 
@@ -57,6 +60,7 @@ public class Page extends JFrame {
     }
     public JList<String > getList(){return nameList;}
     public ListPanel getListPanel(){return pan;}
+    public JPanel getacc(){return acc;}
     public JPanel getPanel(){
         return panel;
     }
