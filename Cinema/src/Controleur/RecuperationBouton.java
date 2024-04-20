@@ -190,7 +190,11 @@ public void Jlistener() {
                     Connexion v = new Connexion();
                     if(v.verificationInscriptionFilm(nomFilm,auteurFilm,nbPlaceFilm,lienImageFilm,prixFilm,resumeFilm,noteFilm)){
                         if(v.verificationDoublonsInscriptionFilm(nomFilm,horaire)) {
-                            v.InscriptionBDDFilm(nomUtilisateur, prenomUtilisateur, age, mdp, frame);
+                            int nbPlaceFilm1 = Integer.parseInt(nbPlace.getText());
+                            int prixFilm1 = Integer.parseInt(prix.getText());
+                            int noteFilm1 = Integer.parseInt(note.getText());
+
+                            v.InscriptionBDDFilm(nomFilm,auteurFilm,nbPlaceFilm1,lienImageFilm,prixFilm1,resumeFilm,noteFilm1,horaire,frame);
                         }
                         else{
                             JOptionPane.showMessageDialog(null, "Film déjà existant à cette horaire,\n Veuillez changer d'horaire.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);

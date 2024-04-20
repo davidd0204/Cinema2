@@ -1,6 +1,7 @@
 package Modele;
 
 import Controleur.AfficherInterfaceConnexion;
+import Controleur.EspaceAdmin;
 import Controleur.Generale;
 
 import java.sql.*;
@@ -338,7 +339,26 @@ public class Connexion {
         frame.dispose();
     }
 
-    
+    public void InscriptionBDDFilm(String film, String auteur, int nbPlace, String lienImage,int prix,String resume,int note, int horaire,JFrame frame) throws SQLException, ClassNotFoundException {
+        conn.setAutoCommit(false);
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO film (nom_film,auteur,nbrplace,image_film,prix_place,resume,note,heure) VALUES (?,?,?,?,?,?,?,?)");
+        ps.setString(1,film);
+        ps.setString(2,auteur);
+        ps.setInt(3,nbPlace);
+        ps.setString(4,lienImage);
+        ps.setInt(5,prix);
+        ps.setString(6,resume);
+        ps.setInt(7,note);
+        ps.setInt(8,horaire);
+        ps.executeUpdate();
+
+        //Validation la transaction
+        conn.commit();
+        System.out.println("Transactions réussies, le film a été ajoutés avec succès à la base de données.");
+        EspaceAdmin espace= new EspaceAdmin();
+        espace.afficherInterfaceAdmin();
+        frame.dispose();
+    }
     public boolean verificationInscription(String nom, String prenom, int age, String password, String confirmationPassword){
         /*System.out.println("nom: "+nom);
         System.out.println("prenom: "+prenom);
@@ -375,7 +395,7 @@ public class Connexion {
         return true;
     }
     public boolean verificationDoublonsInscriptionFilm(String film, int horaire) throws SQLException{
-        String sql = "SELECT id_film FROM user WHERE nom_film = ? AND heure = ?";
+        String sql = "SELECT id_film FROM film WHERE nom_film = ? AND heure = ?";
 
         int resultat = 0;
         try {
