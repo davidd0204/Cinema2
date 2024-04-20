@@ -322,7 +322,9 @@ public void Jlistener() {
         bouton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame.dispose();
                 EspaceAdmin espaceAdmin = new EspaceAdmin();
+                espaceAdmin.afficherInterfaceAdmin();
             }
         });
     }
