@@ -10,11 +10,11 @@ public class Connexion {
     private final Connection conn;
     private final Statement stmt;
     public int getnbrplace;
-    String databaseName="Cinema";
+    String databaseName="cinema";
     String username="root";
-    //String password="";
+    String password="";
 
-    String password="Jack123456";
+    //String password="Jack123456";
 
     //String password="Jack123456";
 
