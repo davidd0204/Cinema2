@@ -50,7 +50,7 @@ public class EspaceAdmin extends JFrame {
         Bouton boutonajout = new BoutonAppuie(0,0,50,50,"Ajouter");
         JButton boutonajout1 = boutonajout.CreaBouton();
         RecuperationBouton listener2 = new RecuperationBouton(boutonajout1);
-
+        listener2.ButtonAjouterFilm(boutonajout1,frame);
 
         Bouton boutonsupp = new BoutonAppuie(0,0,50,50,"Supprimer");
         JButton boutonsupp1 = boutonsupp.CreaBouton();

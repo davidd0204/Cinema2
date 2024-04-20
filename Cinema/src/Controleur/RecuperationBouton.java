@@ -172,11 +172,48 @@ public void Jlistener() {
             }
         });
     }
+
+    public void ButtonEnregistrerFilm(JButton boutonEnregistrerFilm,JTextField film, JTextField auteur,JTextField nbPlace, JTextField lienImage, JTextField prix, JTextField resume, JTextField note,JComboBox comboBoxHoraire,JFrame frame){
+        boutonEnregistrerFilm.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Integer selectedOption = (Integer) comboBoxHoraire.getSelectedItem();
+                String nomFilm = film.getText();
+                String auteurFilm = auteur.getText();
+                String nbPlaceFilm = nbPlace.getText();
+                String lienImageFilm = lienImage.getText();
+                String prixFilm = prix.getText();
+                String resumeFilm = resume.getText();
+                String noteFilm = note.getText();
+                int horaire = selectedOption;
+
+                try {
+                    Connexion v = new Connexion();
+                    if(v.verificationInscriptionFilm(nomFilm,auteurFilm,nbPlaceFilm,lienImageFilm,prixFilm,resumeFilm,noteFilm)){
+                        if(v.verificationDoublonsInscriptionFilm(nomFilm,horaire)) {
+                            v.InscriptionBDDFilm(nomUtilisateur, prenomUtilisateur, age, mdp, frame);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Film déjà existant à cette horaire,\n Veuillez changer d'horaire.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs pour pouvoir ajouter un film.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+    }
     public void ButtonAjouterFilm(JButton boutonAjouterFilm, JFrame frame){
         boutonAjouterFilm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Code à exécuter lorsque le bouton de connexion est cliqué
                 frame.dispose(); // Fermer la fenêtre actuelle
+                FormulaireAjouterFilm addFilm = new FormulaireAjouterFilm();
+                addFilm.AfficherFormulaireAjouterFilm(frame);
                 //AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
                 //a.FormulaireInscription(frame);
                 // Afficher l'interface de saisie utilisateur et mot de passe
@@ -281,6 +318,19 @@ public void Jlistener() {
             public void actionPerformed(ActionEvent e) {
                 AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
                 a.afficherInterfaceConnexion(frame);
+                // Fermer la fenêtre des informations utilisateur
+                frame.dispose();
+
+                // Afficher à nouveau la fenêtre principale
+                //frame.setVisible(true);
+            }
+        });
+    }
+    public void ButtonRetourPageAdmin(JButton boutonRetourPageAdmin, JFrame frame){
+        boutonRetourPageAdmin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                EspaceAdmin espace= new EspaceAdmin();
+                espace.afficherInterfaceAdmin();
                 // Fermer la fenêtre des informations utilisateur
                 frame.dispose();
 

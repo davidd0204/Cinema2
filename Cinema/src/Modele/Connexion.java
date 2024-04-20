@@ -337,6 +337,8 @@ public class Connexion {
         a.afficherInterfaceConnexion(frame);
         frame.dispose();
     }
+
+    
     public boolean verificationInscription(String nom, String prenom, int age, String password, String confirmationPassword){
         /*System.out.println("nom: "+nom);
         System.out.println("prenom: "+prenom);
@@ -344,6 +346,14 @@ public class Connexion {
         System.out.println("password: "+password);
         System.out.println("confirmerPassword: "+confirmationPassword);*/
         if(nom.isEmpty() || prenom.isEmpty() || password.isEmpty() || confirmationPassword.isEmpty() || !password.equals(confirmationPassword)){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    public boolean verificationInscriptionFilm(String film, String auteur,String nbPlace, String lienImage, String prix, String resume, String note){
+        if(film.isEmpty() || auteur.isEmpty() || nbPlace.isEmpty() || lienImage.isEmpty() || prix.isEmpty() || resume.isEmpty() || note.isEmpty()){
             return false;
         }
         else {
@@ -362,6 +372,33 @@ public class Connexion {
             }
             System.out.println(rs.getString("Utilisateur"));
         }
+        return true;
+    }
+    public boolean verificationDoublonsInscriptionFilm(String film, int horaire) throws SQLException{
+        String sql = "SELECT id_film FROM user WHERE nom_film = ? AND heure = ?";
+
+        int resultat = 0;
+        try {
+            // Utilisation d'un PreparedStatement pour éviter les problèmes de sécurité liés aux injections SQL
+            PreparedStatement psSelect = conn.prepareStatement(sql);
+            psSelect.setString(1, film);
+            psSelect.setInt(2, horaire);
+
+            // Exécution de la requête et récupération du résultat
+            ResultSet rs = psSelect.executeQuery();
+            if (rs.next()) {
+                resultat = rs.getInt("id_film");
+                System.out.println("Resultat Ajouter un film: ID_Film "+resultat);
+                return false;
+                //// System.out.println("Nombre de places disponibles pour le film " + nomFilm + " (" + idFilm + "): " + nbrPlaceDisponible);
+                // Compare le nombre de places attendu avec le nombre disponible
+                /////return nbrPlaceDisponible == nombrePlceAttendu;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL : " + e.getMessage());
+            throw e; // Propager l'exception après la journalisation
+        }
+
         return true;
     }
     public void decrementerPlaces(String nomFilm, int placesVendues, Integer heure) throws SQLException {
