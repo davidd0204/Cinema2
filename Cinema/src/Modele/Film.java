@@ -19,7 +19,8 @@ public class Film {
     public Film(String nom_film){
         this.nom_film=nom_film;
         try{
-            Connection connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "");
+            //Connection connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "");
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "Jack123456");
             String requete = "SELECT id_film, auteur, nbrplace, image_film, prix_place, resume, note, heure FROM film WHERE nom_film = ?";
             PreparedStatement statement = ((Connection) connexion).prepareStatement(requete);
             statement.setString(1, nom_film);

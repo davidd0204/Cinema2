@@ -198,7 +198,7 @@ public void Jlistener() {
                         if(v.verificationDoublonsInscriptionFilm(nomFilm,horaire)) {
                             int nbPlaceFilm1 = Integer.parseInt(nbPlace.getText());
                             int prixFilm1 = Integer.parseInt(prix.getText());
-                            int noteFilm1 = Integer.parseInt(note.getText());
+                            float noteFilm1 = Float.parseFloat(note.getText());
 
                             v.InscriptionBDDFilm(nomFilm,auteurFilm,nbPlaceFilm1,lienImageFilm,prixFilm1,resumeFilm,noteFilm1,horaire,frame);
                         }

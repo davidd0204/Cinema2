@@ -15,9 +15,9 @@ public class Connexion {
     public int getnbrplace;
     String databaseName="cinema";
     String username="root";
-    String password="";
+    //String password="";
 
-    //String password="Jack123456";
+    String password="Jack123456";
 
 
     public Connexion() throws SQLException, ClassNotFoundException {
@@ -341,7 +341,7 @@ public class Connexion {
         frame.dispose();
     }
 
-    public void InscriptionBDDFilm(String film, String auteur, int nbPlace, String lienImage,int prix,String resume,int note, int horaire,JFrame frame) throws SQLException, ClassNotFoundException {
+    public void InscriptionBDDFilm(String film, String auteur, int nbPlace, String lienImage,int prix,String resume,float note, int horaire,JFrame frame) throws SQLException, ClassNotFoundException {
         conn.setAutoCommit(false);
         PreparedStatement ps = conn.prepareStatement("INSERT INTO film (nom_film,auteur,nbrplace,image_film,prix_place,resume,note,heure) VALUES (?,?,?,?,?,?,?,?)");
         ps.setString(1,film);
@@ -350,7 +350,7 @@ public class Connexion {
         ps.setString(4,lienImage);
         ps.setInt(5,prix);
         ps.setString(6,resume);
-        ps.setInt(7,note);
+        ps.setFloat(7,note);
         ps.setInt(8,horaire);
         ps.executeUpdate();
 
