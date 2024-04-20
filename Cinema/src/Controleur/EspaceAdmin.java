@@ -43,17 +43,29 @@ public class EspaceAdmin extends JFrame {
 
     public void afficherInterfaceAdmin() {
         ListPanel liste=new ListPanel();
-        liste.listeJusteNom();
+
         panel.add(liste,BorderLayout.NORTH);
         RecuperationBouton Jliste=new RecuperationBouton(liste.listeJusteNom());
-
+        ///Jliste.ListenerJ(liste.listeJusteNom());
         Bouton boutonajout = new BoutonAppuie(0,0,50,50,"Ajouter");
         JButton boutonajout1 = boutonajout.CreaBouton();
         RecuperationBouton listener2 = new RecuperationBouton(boutonajout1);
 
+
         Bouton boutonsupp = new BoutonAppuie(0,0,50,50,"Supprimer");
         JButton boutonsupp1 = boutonsupp.CreaBouton();
         RecuperationBouton listenersupp = new RecuperationBouton(boutonsupp1);
+       /// listenersupp.boutetList(liste.listeJusteNom(),boutonsupp1,Jliste);
+        listenersupp.setupComponents(liste.listeJusteNom(),boutonsupp1,frame);
+
+        Bouton boutonmodif = new BoutonAppuie(0,0,50,50,"Modifier");
+        JButton boutonmod = boutonmodif.CreaBouton();
+        RecuperationBouton listenersmod = new RecuperationBouton(boutonmod);
+
+        Bouton boutontop = new BoutonAppuie(0,0,50,50,"Tendence");
+        JButton boutontendence = boutontop.CreaBouton();
+        RecuperationBouton listenerstop = new RecuperationBouton(boutontendence);
+
 
         Bouton boutonRetour = new BoutonAppuie(0,0,50,50,"Retour");
         JButton boutonRetour1 = boutonRetour.CreaBouton();
@@ -62,6 +74,9 @@ public class EspaceAdmin extends JFrame {
         buffer.add(boutonRetour1);
         buffer.add(boutonsupp1);
         buffer.add(boutonajout1);
+        buffer.add(boutonmod);
+        buffer.add(boutontendence);
+
         buffer.setVisible(true);
         frame.add(buffer,BorderLayout.CENTER);
         frame.add(panel,BorderLayout.NORTH);
@@ -74,8 +89,8 @@ public class EspaceAdmin extends JFrame {
         frameConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameConnexion.setLayout(new GridLayout(4, 1));
 */
-        // Positionner la nouvelle fenêtre par rapport à la fenêtre principale
-       /// panel.setLocationRelativeTo(frame);
+    // Positionner la nouvelle fenêtre par rapport à la fenêtre principale
+    /// panel.setLocationRelativeTo(frame);
 
 
        /* JTextField champUtilisateur = new JTextField();
@@ -98,7 +113,14 @@ public class EspaceAdmin extends JFrame {
         ///frameConnexion.add(boutonRetour1);
 
 
-        // Rendre la fenêtre de connexion visible
-      ////  frameConnexion.setVisible(true);
-}
 
+    // Création de l'écouteur avec le bouton
+    ////listener2.ButtonRetour(boutonRetour1,frameConnexion);
+
+    // Ajouter le bouton de retour à la fenêtre des informations utilisateur
+    ///frameConnexion.add(boutonRetour1);
+
+
+    // Rendre la fenêtre de connexion visible
+    ////  frameConnexion.setVisible(true);
+}
