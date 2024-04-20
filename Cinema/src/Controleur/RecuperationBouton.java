@@ -255,6 +255,7 @@ public void Jlistener() {
                     v.verifierDisponibiliteFilm(utilisateur,motDePasse);
                     if(v.verifierDisponibiliteFilm(utilisateur, motDePasse))
                     {
+                        frame.dispose();
                         System.out.println("yep");
                         type=v.getType(utilisateur,motDePasse);
                         int id=v.getID(utilisateur,motDePasse);
@@ -271,7 +272,8 @@ public void Jlistener() {
 
                     }
                     else{
-                        a.afficherInfosErreur(frame);
+                        JOptionPane.showMessageDialog(null, "Le nom d'utilisateur ou le mot de passe saisi est incorrect..", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+                        //a.afficherInfosErreur(frame);
                     }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
@@ -297,7 +299,7 @@ public void Jlistener() {
                 }*/
 
                 // Fermer la fenêtre de connexion
-                frame.dispose();
+                //frame.dispose();
             }
         });
     }
