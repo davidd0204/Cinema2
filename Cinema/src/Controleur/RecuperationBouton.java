@@ -1,13 +1,12 @@
 package Controleur;
 
-import Modele.Connexion;
-import Modele.FilmDAOimpl;
-import Modele.Personne;
+import Modele.*;
 import Vue.*;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -286,7 +285,9 @@ public void Jlistener() {
                     JList<String> filmList = new JList<>(listModel);
 
                     // Création d'un JScrollPane pour la JList
+                    //ListPanel pan=new ListPanel(filmList);
                     JScrollPane scrollPane = new JScrollPane(filmList);
+                    //filmList.add(scrollPane, BorderLayout.CENTER);
 
                     // Ajout du JScrollPane à votre JFrame
                     frame.getContentPane().removeAll(); // Supprimer les composants existants de la fenêtre
@@ -295,6 +296,10 @@ public void Jlistener() {
                     // Actualiser l'affichage de la fenêtre
                     frame.revalidate();
                     frame.repaint();
+                    Bouton boutonRetour = new BoutonAppuie(0,0,50,50,"Retour");
+                    JButton boutonRetour1 = boutonRetour.CreaBouton();
+                    RecuperationBouton listener = new RecuperationBouton(boutonRetour1);
+                    listener.ButtonRetour(boutonRetour1,frame);
 
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);

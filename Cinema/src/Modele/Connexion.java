@@ -404,7 +404,7 @@ public class Connexion {
                 String resume = resultSet.getString("resume");
                 float note = resultSet.getFloat("note");
                 int heure = resultSet.getInt("heure");
-                String total = classement + " " + nom_film + " " + auteur + " " + nbrplace + " " + prix_place + " " + note + " " + heure;
+                String total = classement + " " + nom_film + " de " + auteur + "/ note : " + note+" / 5";
                 listeFilmsTrieParNotes.add(total);
             }
         }

@@ -85,6 +85,20 @@ public class EspaceAdmin extends JFrame {
 
 
     }
+
+    public void afficherTendances (){
+        ListPanel liste=new ListPanel();
+        panel.add(liste,BorderLayout.NORTH);
+        RecuperationBouton Jliste=new RecuperationBouton(liste.listeJusteNom());
+        Bouton boutonRetour = new BoutonAppuie(0,0,50,50,"Retour");
+        JButton boutonRetour1 = boutonRetour.CreaBouton();
+        RecuperationBouton listener = new RecuperationBouton(boutonRetour1);
+        listener.ButtonRetour(boutonRetour1,frame);
+        buffer.add(boutonRetour1);
+        buffer.setVisible(true);
+        frame.add(buffer,BorderLayout.CENTER);
+        frame.add(panel,BorderLayout.NORTH);
+    }
        /*JFrame frameConnexion = new JFrame("Admin");
         frameConnexion.setSize(450, 300);
         frameConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

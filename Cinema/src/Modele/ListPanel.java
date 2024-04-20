@@ -10,6 +10,10 @@ import java.sql.SQLException;
 
 public class ListPanel extends JPanel {
     JList<String> list;
+
+    public ListPanel(JList<String> liste){
+        this.list=liste;
+    }
     public ListPanel() {
         list= new JList<>();
         setLayout(new BorderLayout());
