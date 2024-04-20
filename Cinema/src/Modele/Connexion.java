@@ -15,9 +15,9 @@ public class Connexion {
     public int getnbrplace;
     String databaseName="cinema";
     String username="root";
-    String password="";
+    //String password="";
 
-   //// String password="Jack123456";
+    String password="Jack123456";
 
 
     public Connexion() throws SQLException, ClassNotFoundException {
@@ -79,6 +79,8 @@ public class Connexion {
             psSelect.close();
         }
     }
+
+
 
     public String getresume(String nom) throws SQLException {
         String filmName="";
@@ -467,5 +469,25 @@ public class Connexion {
             }
         }
         return listeFilmsTrieParNotes;
+    }
+    public void modifierFilm(String nomFilm, int heure1) throws SQLException {
+        //String sql = "UPDATE film SET nom_film=?,auteur=?,nbrplace=?,image_film=?,prix_place=?,resume=?,note=?,heure=?  WHERE nom_film = nomFilm AND heure= heure1";
+        String sqlSelect = "SELECT * FROM film WHERE nom_film = nomFilm AND heure = heure1";
+
+        int nouv = 0;
+        try {
+            // Utilisation d'un PreparedStatement pour éviter les problèmes de sécurité liés aux injections SQL
+            PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
+            // Exécution de la requête et récupération du résultat
+            ResultSet rs = psSelect.executeQuery();
+            if (rs.next()) {
+                nouv = rs.getInt("userId");
+                System.out.println("NOUVADSQSD: "+nouv);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL : " + e.getMessage());
+            throw e; // Propager l'exception après la journalisation
+        }
+
     }
 }

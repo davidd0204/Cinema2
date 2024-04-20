@@ -428,8 +428,7 @@ public void Jlistener() {
                             if (parts.length >= 2) {
                                 String firstName = parts[0]; // Premier mot
                                 int heure = Integer.parseInt(parts[1]); // Deuxième mot
-                               sql.suppFilm(firstName,heure);
-
+                                sql.suppFilm(firstName,heure);
                             } else {
                                 System.out.println("Le nom sélectionné ne contient pas deux mots.");
                             }
@@ -448,7 +447,57 @@ public void Jlistener() {
             }
         });
     }
+    public void setupComponents2(JList<String> list, JButton button, JFrame frame) {
+        // Ajouter un MouseListener à la liste pour détecter et stocker la sélection
+        list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) { // Un seul clic pour sélectionner
+                    int index = list.locationToIndex(e.getPoint());
+                    if (index >= 0) {
+                        selectedName = list.getModel().getElementAt(index);
+                        System.out.println("Selected: " + selectedName);
+                    }
+                }
+            }
+        });
 
+        // Ajouter un ActionListener au bouton pour effectuer l'action avec l'élément sélectionné
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                if (selectedName != null) { // Vérifie qu'un nom a été sélectionné
+                    try {
+                        Connexion sql = new Connexion();
+                        // Décommentez la ligne suivante pour supprimer le film sélectionné de la base de données
+                        // sql.suppFilm(selectedName);
+                        JOptionPane.showMessageDialog(null, "Action effectuée pour : " + selectedName);
+                        frame.dispose();
+                        if (selectedName != null && !selectedName.isEmpty()) {
+                            String[] parts = selectedName.split("-"); // Séparation par espace
+                            if (parts.length >= 2) {
+                                String firstName = parts[0]; // Premier mot
+                                int heure = Integer.parseInt(parts[1]); // Deuxième mot
+                                //sql.suppFilm(firstName,heure);
+                                //sql.modifierFilm(firstName,heure);
+                            } else {
+                                System.out.println("Le nom sélectionné ne contient pas deux mots.");
+                            }
+                        }
+
+                        EspaceAdmin espace = new EspaceAdmin();
+                        espace.afficherInterfaceAdmin();
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, "Error connecting to database: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace(); // Considérez de loguer ceci de manière appropriée
+                    }
+                    selectedName = null; // Réinitialiser la sélection après l'action
+                } else {
+                    JOptionPane.showMessageDialog(null, "Aucun film sélectionné.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
 
 
     public void ajouterListenernbrfilm(JTextField field, Page Acceuil, JTextField field2,Personne personne,JComboBox box) {
