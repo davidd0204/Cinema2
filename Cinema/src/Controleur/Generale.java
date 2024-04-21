@@ -21,9 +21,9 @@ public class Generale extends JFrame {
 
     public void Generale() throws SQLException, ClassNotFoundException {
         
-        frame = new JFrame("ECE CINEMA");
-        frame.setSize(590,200);
-        JPanel panel=new JPanel();
+        frame = new JFrame("ECE CINEMA"); //nom de la page
+        frame.setSize(590,200); //parametrage de la fenetre
+        JPanel panel=new JPanel(); //création d'un nouveau panel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(frame);
         panel.setLayout(null);
@@ -36,24 +36,23 @@ public class Generale extends JFrame {
         label1.setForeground(new Color(64, 64, 64));
         panel.add(label1);
 
-        Bouton connexion = new BoutonAppuie(0,0,0,0,"Connexion");
-        JButton connexion1 = connexion.CreaBouton();
-        connexion1.setBounds(30,60,150,30);
-        connexion1.setBackground(Color.orange);
-        connexion1.setFont(new Font("Arial",Font.BOLD,18));
+        Bouton connexion = new BoutonAppuie(0,0,0,0,"Connexion"); //Création d'un nouveau bouton avec la classe bouton
+        JButton connexion1 = connexion.CreaBouton(); //affectation de ce boutton a un bouton JButton
+        connexion1.setBounds(30,60,150,30); //encardement de ce bouton
+        connexion1.setBackground(Color.orange); //couleur du bouton
+        connexion1.setFont(new Font("Arial",Font.BOLD,18));//police des inscriptions a l'intérieur du bouton
         connexion1.setForeground(new Color(64, 64, 64));
         RecuperationBouton listener1 = new RecuperationBouton(connexion1); // Création de l'écouteur avec le bouton
-        listener1.ButtonConnexion(personne,connexion1,frame);
-        //listener1.ButtonConnexion(connexion1,frame);
-        panel.add(connexion1);
+        listener1.ButtonConnexion(personne,connexion1,frame); //appel du listener programmé pour ce bouton en particulier
+        panel.add(connexion1); //ajout du bouton au panel de bouton
 
-        Bouton invite = new BoutonAppuie(0,0,50,50,"Invité");
-        JButton invite1 = invite.CreaBouton();
-        invite1.setBounds(210,60,150,30);
+        Bouton invite = new BoutonAppuie(0,0,50,50,"Invité"); //nouveau bouton pour acceder au site en tant qu'invité
+        JButton invite1 = invite.CreaBouton(); //creation du bouton invité
+        invite1.setBounds(210,60,150,30); //encadrement du bouton
         invite1.setBackground(Color.orange);
         invite1.setFont(new Font("Arial",Font.BOLD,18));
         invite1.setForeground(new Color(64, 64, 64));
-        RecuperationBouton listener2 = new RecuperationBouton(invite1); // Création de l'écouteur avec le bouton
+        RecuperationBouton listener2 = new RecuperationBouton(invite1); // appel du listener programmé pour ce bouton en particulier
         listener2.ButtonInvite(invite1,frame);
         panel.add(invite1);
 
