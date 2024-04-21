@@ -117,7 +117,7 @@ public void Jlistener() {
                 frame.dispose(); // Fermer la fenêtre actuelle
 
                 // Afficher l'interface de saisie utilisateur et mot de passe
-                AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
+                AfficherInterfaceConnexion a = new AfficherInterfaceConnexion(); ///on lance une connexion
                 System.out.println("Affichage de l'interface de connexion");
                 a.afficherInterfaceConnexion(frame);
             }
@@ -133,6 +133,7 @@ public void Jlistener() {
                 Connexion connexionBDD = null; */
                 frame.dispose(); // Fermer la fenêtre actuelle
                 Personne personne = new Personne(0, "invite", 0);
+                ///un invite est une personne nommé invite
 
                 Generale g = new Generale();
                 try {
@@ -153,7 +154,7 @@ public void Jlistener() {
                 String prenomUtilisateur = prenom.getText();
                 int age = selectedOption;
                 String mdp = password.getText();
-                String confirmMDP = confirmationPassword.getText();
+                String confirmMDP = confirmationPassword.getText(); ///on recupere les infos necessaire a la requete pour rechercher
 
                 try {
                     Connexion v = new Connexion();
@@ -198,7 +199,7 @@ public void Jlistener() {
                             int prixFilm1 = Integer.parseInt(prix.getText());
                             float noteFilm1 = Float.parseFloat(note.getText());
 
-                            v.InscriptionBDDFilm(nomFilm,auteurFilm,nbPlaceFilm1,lienImageFilm,prixFilm1,resumeFilm,noteFilm1,horaire,frame);
+                            v.InscriptionBDDFilm(nomFilm,auteurFilm,nbPlaceFilm1,lienImageFilm,prixFilm1,resumeFilm,noteFilm1,horaire,frame); ///on enregistre le film cree en tant qu admin
                         }
                         else{
                             JOptionPane.showMessageDialog(null, "Film déjà existant à cette horaire,\n Veuillez changer d'horaire.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);
@@ -225,17 +226,17 @@ public void Jlistener() {
                 String lienImageFilm = lienImage.getText();
                 String prixFilm = prix.getText();
                 String resumeFilm = resume.getText();
-                String noteFilm = note.getText();
+                String noteFilm = note.getText(); ///on recupere toutes les infos meme ceux compris dans une combox
                 int horaire = selectedOption;
 
                 try {
                     Connexion v = new Connexion();
                     if(v.verificationInscriptionFilm(nomFilm,auteurFilm,nbPlaceFilm,lienImageFilm,prixFilm,resumeFilm,noteFilm)){
                         if(v.verificationDoublonsInscriptionFilm(nomFilm,horaire)) {
-                        int nbPlaceFilm1 = Integer.parseInt(nbPlace.getText());
-                        int prixFilm1 = Integer.parseInt(prix.getText());
+                        int nbPlaceFilm1 = Integer.parseInt(nbPlace.getText()); ///on recupere le nombre de film
+                        int prixFilm1 = Integer.parseInt(prix.getText()); ///on recupere le prix du film
                         float noteFilm1 = Float.parseFloat(note.getText());
-                        v.ModificationFilm(nomFilm,auteurFilm,nbPlaceFilm1,lienImageFilm,prixFilm1,resumeFilm,noteFilm1,horaire,nomFilmBase,heureFilmBase,frame);
+                        v.ModificationFilm(nomFilm,auteurFilm,nbPlaceFilm1,lienImageFilm,prixFilm1,resumeFilm,noteFilm1,horaire,nomFilmBase,heureFilmBase,frame); ///listener qui permet de modifier le film
                         }
                         else{
                             JOptionPane.showMessageDialog(null, "Film déjà existant à cette horaire,\n Veuillez changer d'horaire.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);
@@ -257,8 +258,8 @@ public void Jlistener() {
             public void actionPerformed(ActionEvent e) {
                 // Code à exécuter lorsque le bouton de connexion est cliqué
                 frame.dispose(); // Fermer la fenêtre actuelle
-                FormulaireAjouterFilm addFilm = new FormulaireAjouterFilm();
-                addFilm.AfficherFormulaireAjouterFilm(frame);
+                FormulaireAjouterFilm addFilm = new FormulaireAjouterFilm(); //on instancie une classe permetant d ajouter des films
+                addFilm.AfficherFormulaireAjouterFilm(frame); ///on ajoute un film dans la base de donner
                 //AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
                 //a.FormulaireInscription(frame);
                 // Afficher l'interface de saisie utilisateur et mot de passe
@@ -273,7 +274,7 @@ public void Jlistener() {
                 // Code à exécuter lorsque le bouton de connexion est cliqué
                 frame.dispose(); // Fermer la fenêtre actuelle
                 AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
-                a.FormulaireInscription(frame);
+                a.FormulaireInscription(frame); ///on affiche le formulaire permettant de s inscire
                 // Afficher l'interface de saisie utilisateur et mot de passe
 
                 // CODE D'INSCRIPTION ICI
@@ -282,7 +283,7 @@ public void Jlistener() {
     }
     public void ButtonValider(JButton boutonValider, JTextField champUtilisateur, JPasswordField champMotDePasse, JFrame frame){
         boutonValider.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) { ///si le bouton est appuyé
                 // Récupérer les valeurs saisies par l'utilisateur
                 Personne personne;
                 String utilisateur = champUtilisateur.getText();
@@ -292,8 +293,8 @@ public void Jlistener() {
                 int type=0;
                 AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
                 try {
-                    v = new Connexion();
-                    v.verifierDisponibiliteFilm(utilisateur,motDePasse);
+                    v = new Connexion(); ///on tente une connexion a la base de donnée
+                    v.verifierDisponibiliteFilm(utilisateur,motDePasse); ///on verifie la disponibilité
                     if(v.verifierDisponibiliteFilm(utilisateur, motDePasse))
                     {
                         frame.dispose();
@@ -303,11 +304,11 @@ public void Jlistener() {
                         personne=new Personne(type,utilisateur,id);
                         if(type==1)
                         {
-                          EspaceAdmin espace= new EspaceAdmin();
+                          EspaceAdmin espace= new EspaceAdmin(); ///on va sur la page admin si on est admin
                           espace.afficherInterfaceAdmin();
                         }
                         else{
-                            g.LancementJeux(personne);
+                            g.LancementJeux(personne); ///on lance le une fenetre pour personne classique
                         }
                         ///code qui associe les id a la personne
 

@@ -41,7 +41,7 @@ public class EspaceAdmin extends JFrame {
         panel.setVisible(true);
         buffer.setVisible(true);
         frame.add(buffer, BorderLayout.CENTER);
-        frame.add(panel, BorderLayout.NORTH);
+        frame.add(panel, BorderLayout.NORTH); ///afficher une lecture de facture
     }
 
     public void afficherInterfaceAdmin() {
@@ -54,7 +54,7 @@ public class EspaceAdmin extends JFrame {
 
         panel.add(titreLabel, BorderLayout.NORTH);*/
 
-        ListPanel liste=new ListPanel();
+        ListPanel liste=new ListPanel(); ///creation d un panel pour afficher la liste des films
         liste.setFont(new Font("Arial",Font.BOLD,22));
         liste.setBounds(190,60,200,25);
         panel.add(liste,BorderLayout.NORTH);
@@ -83,9 +83,9 @@ public class EspaceAdmin extends JFrame {
         JButton boutonmod = boutonmodif.CreaBouton();
         boutonmod.setFont(new Font("Arial",Font.BOLD,18));
         boutonmod.setForeground(new Color(64, 64, 64));
-        boutonmod.setBackground(Color.orange);
+        boutonmod.setBackground(Color.orange); ////met la couleur orange au bouton
         RecuperationBouton listenersmod = new RecuperationBouton(boutonmod);
-        listenersmod.detectionBoutonModifier(liste.listeJusteNom(),boutonsupp1,boutonmod,frame);
+        listenersmod.detectionBoutonModifier(liste.listeJusteNom(),boutonsupp1,boutonmod,frame);////implementation de boutons qui vont rendre jolie la page
 
         Bouton boutontop = new BoutonAppuie(0,0,50,50,"Tendances");
         JButton boutontendence = boutontop.CreaBouton();
@@ -104,7 +104,7 @@ public class EspaceAdmin extends JFrame {
         listener.ButtonRetour(boutonRetour1,frame);
 
         buffer.add(boutonRetour1);
-        buffer.add(boutonsupp1);
+        buffer.add(boutonsupp1); ///affichage de tous les boutons sur des buffers.
         buffer.add(boutonajout1);
         buffer.add(boutonmod);
         //buffer.add(boutonsuppr1);
@@ -128,7 +128,7 @@ public class EspaceAdmin extends JFrame {
         listener.ButtonRetourTendance(boutonRetour1,frame);
         buffer.add(boutonRetour1);
         buffer.setVisible(true);
-        frame.add(buffer,BorderLayout.CENTER);
+        frame.add(buffer,BorderLayout.CENTER); ///affichage sur les buffers
         frame.add(panel,BorderLayout.NORTH);
     }
 
