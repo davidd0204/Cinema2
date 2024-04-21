@@ -25,6 +25,7 @@ public class EspaceAdmin extends JFrame {
         this.frame.setVisible(true);
         panel=new JPanel();
         buffer=new JPanel();
+        buffer2=new JPanel();
 
 
 
@@ -44,9 +45,11 @@ public class EspaceAdmin extends JFrame {
 
     public void afficherInterfaceAdmin() {
         ListPanel liste=new ListPanel();
+        ListPanel liste2=new ListPanel();
 
         panel.add(liste,BorderLayout.NORTH);
         RecuperationBouton Jliste=new RecuperationBouton(liste.listeJusteNom());
+        RecuperationBouton Jliste2=new RecuperationBouton(liste2.listeJusteNom());
         ///Jliste.ListenerJ(liste.listeJusteNom());
         Bouton boutonajout = new BoutonAppuie(0,0,50,50,"Ajouter");
         JButton boutonajout1 = boutonajout.CreaBouton();
@@ -57,12 +60,17 @@ public class EspaceAdmin extends JFrame {
         JButton boutonsupp1 = boutonsupp.CreaBouton();
         RecuperationBouton listenersupp = new RecuperationBouton(boutonsupp1);
        /// listenersupp.boutetList(liste.listeJusteNom(),boutonsupp1,Jliste);
-        listenersupp.setupComponents(liste.listeJusteNom(),boutonsupp1,frame);
+////
 
-        Bouton boutonmodif = new BoutonAppuie(0,0,50,50,"Modifier");
+
+        Bouton boutonmodif = new BoutonAppuie(0,0,50,50," Modifier  ");
         JButton boutonmod = boutonmodif.CreaBouton();
         RecuperationBouton listenersmod = new RecuperationBouton(boutonmod);
-        listenersmod.setupComponents2(liste.listeJusteNom(),boutonmod,frame);
+
+        listenersupp.setupComponents(liste.listeJusteNom(),boutonsupp1,frame);
+        buffer2.add(liste2);
+        listenersmod.setupComponents2(liste2.listeJusteNom(),boutonmod,frame);
+
 
         Bouton boutontop = new BoutonAppuie(0,0,50,50,"Tendances");
         JButton boutontendence = boutontop.CreaBouton();
@@ -75,14 +83,16 @@ public class EspaceAdmin extends JFrame {
         RecuperationBouton listener = new RecuperationBouton(boutonRetour1);
         listener.ButtonRetour(boutonRetour1,frame);
         buffer.add(boutonRetour1);
-        buffer.add(boutonsupp1);
+        panel.add(boutonsupp1);
         buffer.add(boutonajout1);
-        buffer.add(boutonmod);
+        buffer2.add(boutonmod);
         buffer.add(boutontendence);
 
         buffer.setVisible(true);
+        frame.add(buffer2,BorderLayout.SOUTH);
         frame.add(buffer,BorderLayout.CENTER);
         frame.add(panel,BorderLayout.NORTH);
+        frame.pack();
 
 
 

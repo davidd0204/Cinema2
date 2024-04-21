@@ -14,8 +14,8 @@ public class Film {
     private String resume;
     private float note;
     private int heure;
-    //String mdp="";
-    String mdp="Jack123456";
+    String mdp="";
+    ///String mdp="Jack123456";
 
 
     public Film(String nom_film){

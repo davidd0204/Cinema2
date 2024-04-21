@@ -538,14 +538,16 @@ public void Jlistener() {
                         Connexion sql = new Connexion();
                         // Décommentez la ligne suivante pour supprimer le film sélectionné de la base de données
                         // sql.suppFilm(selectedName);
-                        JOptionPane.showMessageDialog(null, "Action effectuée pour : " + selectedName);
-                        frame.dispose();
+                        //JOptionPane.showMessageDialog(null, "Action effectuée pour : " + selectedName);
+                        //frame.dispose();
                         if (selectedName != null && !selectedName.isEmpty()) {
                             String[] parts = selectedName.split("-"); // Séparation par espace
                             if (parts.length >= 2) {
                                 String firstName = parts[0]; // Premier mot
                                 int heure = Integer.parseInt(parts[1]); // Deuxième mot
+                                //sql.suppFilm(firstName,heure);
                                 sql.suppFilm(firstName,heure);
+                                frame.dispose();
                             } else {
                                 System.out.println("Le nom sélectionné ne contient pas deux mots.");
                             }
@@ -564,6 +566,7 @@ public void Jlistener() {
             }
         });
     }
+
     public void setupComponents2(JList<String> list, JButton button, JFrame frame) {
         // Ajouter un MouseListener à la liste pour détecter et stocker la sélection
         list.addMouseListener(new MouseAdapter() {

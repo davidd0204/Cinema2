@@ -671,7 +671,8 @@ public class Connexion {
         }
 
     }
-    public void ajouterFacture(Personne personne, String titreFilm, int nombrePlaces, int prix, int heure) {
+    public void ajouterFacture(Personne personne, String titreFilm, int nombrePlaces, int prix, int heure) throws SQLException {
+        conn.setAutoCommit(false);
         String sql = "INSERT INTO facture (nom, nom_film, nbrplace, prix, heure, id_personne) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
