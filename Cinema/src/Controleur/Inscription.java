@@ -2,13 +2,12 @@ package Controleur;
 
 import Modele.Bouton;
 import Modele.BoutonAppuie;
-import Modele.Personne;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Inscription {
-    public void afficherInterfaceInscription(JFrame frame,Personne personne) {
+    public void afficherInterfaceInscription(JFrame frame) {
         JFrame frameConnexion = new JFrame("Connexion");
         frameConnexion.setSize(450, 300);
         frameConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

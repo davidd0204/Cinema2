@@ -8,9 +8,7 @@ public class FilmDAOimpl implements FilmDAO{
     public ArrayList<Film> liste_films;
     public final String driver = "jdbc:mysql://localhost:3306/cinema";
     public final String user = "root";
-    //public final String mdp = "";
-    public final String mdp = "Jack123456";
-
+    public final String mdp = "";
 
     public FilmDAOimpl()
     {
@@ -68,6 +66,4 @@ public class FilmDAOimpl implements FilmDAO{
         statement.close();
         connection.close();
     }
-
-
 }

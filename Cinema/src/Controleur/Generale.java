@@ -20,63 +20,29 @@ public class Generale extends JFrame {
     }
 
     public void Generale() throws SQLException, ClassNotFoundException {
-        
-        frame = new JFrame("ECE CINEMA");
-        frame.setSize(590,200);
-        JPanel panel=new JPanel();
+        // Remplacez par votre mot de passe
+        ////String motDePasse = "Jack123456"; // mdp pour jack
+        Connexion connexionBDD = new Connexion();
+
+        // Création de la fenêtre principale
+        frame = new JFrame("Interface de Connexion");
+        frame.setSize(300, 150);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new FlowLayout());
+        //frame.setLayout(new GridLayout(3, 1));
         frame.setLocationRelativeTo(frame);
-        panel.setLayout(null);
-        panel.setBackground(new Color(173, 216, 230));
-        frame.add(panel);
 
-        JLabel label1=new JLabel("BIEVENUE A L' ECE CINEMA");
-        label1.setBounds(135,10,300,40);
-        label1.setFont(new Font("Arial",Font.BOLD,22));
-        label1.setForeground(new Color(64, 64, 64));
-        panel.add(label1);
 
-        Bouton connexion = new BoutonAppuie(0,0,0,0,"Connexion");
+        // Création du bouton de connexion
+        Bouton connexion = new BoutonAppuie(0,0,50,50,"Connexion");
         JButton connexion1 = connexion.CreaBouton();
-        connexion1.setBounds(30,60,150,30);
-        connexion1.setBackground(Color.orange);
-        connexion1.setFont(new Font("Arial",Font.BOLD,18));
-        connexion1.setForeground(new Color(64, 64, 64));
         RecuperationBouton listener1 = new RecuperationBouton(connexion1); // Création de l'écouteur avec le bouton
         listener1.ButtonConnexion(connexion1,frame);
         panel.add(connexion1);
-        listener1.ButtonConnexion(personne,connexion1,frame);
-        //listener1.ButtonConnexion(connexion1,frame);
-        panel.add(connexion1);
-
-        Bouton invite = new BoutonAppuie(0,0,50,50,"Invité");
-        JButton invite1 = invite.CreaBouton();
-        invite1.setBounds(210,60,150,30);
-        invite1.setBackground(Color.orange);
-        invite1.setFont(new Font("Arial",Font.BOLD,18));
-        invite1.setForeground(new Color(64, 64, 64));
-        RecuperationBouton listener2 = new RecuperationBouton(invite1); // Création de l'écouteur avec le bouton
-        listener2.ButtonInvite(invite1,frame);
-        panel.add(invite1);
-
-        Bouton inscription = new BoutonAppuie(0,0,50,50,"Inscription");
-        JButton inscription1 = inscription.CreaBouton();
-        inscription1.setBounds(390,60,150,30);
-        inscription1.setBackground(Color.orange);
-        inscription1.setFont(new Font("Arial",Font.BOLD,18));
-        inscription1.setForeground(new Color(64, 64, 64));
-        RecuperationBouton listener3 = new RecuperationBouton(inscription1); // Création de l'écouteur avec le bouton
-        listener3.ButtonInscription(inscription1,frame);
-        panel.add(inscription1);
-        // Création du bouton de connexion
-        //Bouton connexion = new BoutonAppuie(0,0,50,50,"Connexion");
-        //JButton connexion1 = connexion.CreaBouton();
-        //RecuperationBouton listener1 = new RecuperationBouton(connexion1); // Création de l'écouteur avec le bouton
-        //listener1.ButtonConnexion(connexion1,frame);
 
 
         // Création du bouton d'invité
-        /*Bouton invite = new BoutonAppuie(0,0,50,50,"Invité");
+        Bouton invite = new BoutonAppuie(0,0,50,50,"Invité");
         JButton invite1 = invite.CreaBouton();
         RecuperationBouton listener2 = new RecuperationBouton(invite1); // Création de l'écouteur avec le bouton
         listener2.ButtonInvite(invite1,frame);
@@ -111,7 +77,7 @@ public class Generale extends JFrame {
         // Ajout des boutons à la fenêtre principale
         frame.add(connexion1);
         frame.add(invite1);
-        frame.add(inscription1);*/
+        frame.add(inscription1);
 
         // Rendre la fenêtre principale visible
         frame.setVisible(true);
@@ -149,7 +115,7 @@ public class Generale extends JFrame {
             Acceuil.getPanel().add(bouton, BorderLayout.NORTH);
 
 
-            Bouton recherche=new BoutonRecherche(0,0,50,50,"Recherche");
+            Bouton recherche=new BoutonRecherche(0,0,50,50,"recherche");
             JButton bouton1=recherche.CreaBouton();
             Acceuil.ajouterbouton(bouton1,0,0,120,20);
             Acceuil.getPanel().add(bouton1, BorderLayout.WEST);
@@ -165,7 +131,7 @@ public class Generale extends JFrame {
             JTextField field=recherche.text();
             Acceuil.ajouterbarre(field,0,0,450,200);
             RecuperationBouton listener2=new RecuperationBouton(bouton1);
-
+            listener2.ajouterListener2(field,Acceuil);
 
 
 
@@ -174,7 +140,7 @@ public class Generale extends JFrame {
             JTextField field2=recherche.text();
             Acceuil.ajouterbarre(field,0,0,450,200);
             RecuperationBouton listener3=new RecuperationBouton(bouton2);
-
+            listener3.ajouterListenernbrfilm(field,Acceuil,field2);
             Acceuil.getbuffer().add(field2,BorderLayout.CENTER);
             Acceuil.getbuffer().add(bouton2, BorderLayout.CENTER);
             Acceuil.getbuffer().add(field,BorderLayout.CENTER);
@@ -183,19 +149,8 @@ public class Generale extends JFrame {
 
             Acceuil.afficherImageURL("/fermer.jpeg",Acceuil.getHeight(),0);
             Acceuil.ajouterResume("RESUME ICI");
-            JComboBox box=new JComboBox<>();
-            box=Acceuil.ajoutercombo(box);/*/
-          /*  JComboBox comboBoxAge=new JComboBox();
-            comboBoxAge.setBounds(160,140,200,25);
-            for (int i = 1; i <= 100; i++) {
-                comboBoxAge.addItem(i);
-            }*/
-          ////  Acceuil.getbuffer().add(comboBoxAge);
 
-            //box=Acceuil.ajoutercombo(box);;
-            listener3.ajouterListenernbrfilm(field,Acceuil,field2,personne,box);
-            Acceuil.ajoutertext("Indiquer l'heure ");
-            listener2.ajouterListener2(field,Acceuil,box);
+
             Acceuil.setVisible(true);
             Acceuil.revalidate();
             Acceuil.getPanel().setPreferredSize(new Dimension(1100,600));

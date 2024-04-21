@@ -10,15 +10,8 @@ import java.sql.SQLException;
 
 public class ListPanel extends JPanel {
     JList<String> list;
-
-    public ListPanel(JList<String> liste){
-        list = new JList<>();
-        list = liste;
-        JScrollPane scrollPane = new JScrollPane(list);
-        add(scrollPane, BorderLayout.CENTER);
-    }
     public ListPanel() {
-        list= new JList<>();
+         list= new JList<>();
         setLayout(new BorderLayout());
 
         try {
@@ -86,7 +79,6 @@ public class ListPanel extends JPanel {
                     }
                 }
             });
-
             list=nameList;
 
         } catch (SQLException e) {
