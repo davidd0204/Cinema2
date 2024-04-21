@@ -29,16 +29,16 @@ public class Film {
             statement.setString(1, nom_film);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                this.id_film = resultSet.getInt("id_film");
-                this.auteur = resultSet.getString("auteur");
-                this.nbrplace = resultSet.getInt("nbrplace");
-                this.image_film = resultSet.getString("image_film");
+                this.id_film = resultSet.getInt("id_film"); // affecte l'id du film
+                this.auteur = resultSet.getString("auteur"); // affecte l'auteur du film
+                this.nbrplace = resultSet.getInt("nbrplace"); // affecte le nombre de place
+                this.image_film = resultSet.getString("image_film"); // affecte le lien de l'image
             }
-            resultSet.close();
-            statement.close();
-            connexion.close();
+            resultSet.close(); // fermer le resultat
+            statement.close(); // fermer le statement
+            connexion.close(); // fermer le connexion
         }
-        catch (SQLException e) {
+        catch (SQLException e) { // activation de l'exception en cas de requete sql non valider
             e.printStackTrace();
         }
     }
