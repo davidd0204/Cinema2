@@ -58,7 +58,7 @@ public class FormulaireAjouterFilm {
         label5.setForeground(new Color(64, 64, 64));
         panel.add(label5);
 
-        JTextField text4=new JTextField("/exemple.jpg");
+        JTextField text4=new JTextField("/fermer.jpeg");
         text4.setBounds(190,180,200,25);
         panel.add(text4);
 

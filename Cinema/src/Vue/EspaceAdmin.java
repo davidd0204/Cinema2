@@ -1,5 +1,6 @@
-package Controleur;
+package Vue;
 
+import Controleur.RecuperationBouton;
 import Modele.Bouton;
 import Modele.BoutonAppuie;
 import Modele.ListPanel;
@@ -47,11 +48,11 @@ public class EspaceAdmin extends JFrame {
         panel.setBackground(new Color(173, 216, 230));
         buffer.setBackground(new Color(173, 216, 230));
         // Titre
-        JLabel titreLabel = new JLabel("Liste des Films");
+     /*   JLabel titreLabel = new JLabel("Liste des Films");
         titreLabel.setFont(new Font("Arial",Font.BOLD,15));
         titreLabel.setBounds(190, 30, 200, 25);
 
-        panel.add(titreLabel, BorderLayout.NORTH);
+        panel.add(titreLabel, BorderLayout.NORTH);*/
 
         ListPanel liste=new ListPanel();
         liste.setFont(new Font("Arial",Font.BOLD,22));

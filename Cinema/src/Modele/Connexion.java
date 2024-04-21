@@ -1,8 +1,7 @@
 package Modele;
 
 import Controleur.AfficherInterfaceConnexion;
-import Controleur.EspaceAdmin;
-import Controleur.Generale;
+import Vue.EspaceAdmin;
 import Controleur.RecuperationBouton;
 
 import java.awt.*;
@@ -18,8 +17,8 @@ public class Connexion {
     String databaseName="cinema";
     String username="root";
     //String password="";
-
-    String password="Jack123456";
+    String password="Proxecom2007$";
+    ///String password="Jack123456";
 
 
     public Connexion() throws SQLException, ClassNotFoundException {

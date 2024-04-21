@@ -9,7 +9,8 @@ public class FilmDAOimpl implements FilmDAO{
     public final String driver = "jdbc:mysql://localhost:3306/cinema";
     public final String user = "root";
     //public final String mdp = "";
-    public final String mdp = "Jack123456";
+    public final String mdp = "Proxecom2007$";
+    ////public final String mdp = "Jack123456";
 
 
     public FilmDAOimpl()

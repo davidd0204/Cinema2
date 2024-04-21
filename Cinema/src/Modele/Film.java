@@ -15,7 +15,8 @@ public class Film {
     private float note;
     private int heure;
     //String mdp="";
-    String mdp="Jack123456";
+    String mdp="Proxecom2007$";
+    ///String mdp="Jack123456";
 
 
     public Film(String nom_film){
