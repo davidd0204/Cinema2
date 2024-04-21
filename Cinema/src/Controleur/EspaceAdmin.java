@@ -3,6 +3,7 @@ package Controleur;
 import Modele.Bouton;
 import Modele.BoutonAppuie;
 import Modele.ListPanel;
+import Modele.Personne;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,20 +26,20 @@ public class EspaceAdmin extends JFrame {
         panel=new JPanel();
         buffer=new JPanel();
 
-      /*  panel=(JPanel) this.getContentPane();
-        buffer=new JPanel();
 
-        nameList = new JList<>();
-        pan = new ListPanel();
-        bufferText=new JPanel();
 
-        bufferText.setPreferredSize(new Dimension(350, 100));
-        pan.setPreferredSize(new Dimension(350, 400));
-
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ///buffer2.setLayout(new GridLayout(2, 2));
-*/
-
+    }
+    public void lireFacture (JList<String> liste, Personne personne){
+        panel.add(liste);
+        Bouton boutonRetour = new BoutonAppuie(0,0,50,50,"Retour");
+        JButton boutonRetour1 = boutonRetour.CreaBouton();
+        RecuperationBouton listener = new RecuperationBouton(boutonRetour1);
+        listener.BoutonPage(boutonRetour1,personne, frame);
+        buffer.add(boutonRetour1);
+        panel.setVisible(true);
+        buffer.setVisible(true);
+        frame.add(buffer, BorderLayout.CENTER);
+        frame.add(panel, BorderLayout.NORTH);
     }
 
     public void afficherInterfaceAdmin() {
@@ -100,43 +101,5 @@ public class EspaceAdmin extends JFrame {
         frame.add(buffer,BorderLayout.CENTER);
         frame.add(panel,BorderLayout.NORTH);
     }
-       /*JFrame frameConnexion = new JFrame("Admin");
-        frameConnexion.setSize(450, 300);
-        frameConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameConnexion.setLayout(new GridLayout(4, 1));
-*/
-    // Positionner la nouvelle fenêtre par rapport à la fenêtre principale
-    /// panel.setLocationRelativeTo(frame);
 
-
-       /* JTextField champUtilisateur = new JTextField();
-        frameConnexion.add(new JLabel("Nom Film"));
-        frameConnexion.add(champUtilisateur);
-        JTextField Auteur = new JTextField();
-        frameConnexion.add(Auteur);
-        JTextField Nbrplace = new JTextField();
-        frameConnexion.add(Nbrplace);
-        ///frameConnexion.add(champMotDePasse);
-        ///frameConnexion.add(boutonValider1);
-*/
-
-
-
-        // Création de l'écouteur avec le bouton
-        ////listener2.ButtonRetour(boutonRetour1,frameConnexion);
-
-        // Ajouter le bouton de retour à la fenêtre des informations utilisateur
-        ///frameConnexion.add(boutonRetour1);
-
-
-
-    // Création de l'écouteur avec le bouton
-    ////listener2.ButtonRetour(boutonRetour1,frameConnexion);
-
-    // Ajouter le bouton de retour à la fenêtre des informations utilisateur
-    ///frameConnexion.add(boutonRetour1);
-
-
-    // Rendre la fenêtre de connexion visible
-    ////  frameConnexion.setVisible(true);
 }

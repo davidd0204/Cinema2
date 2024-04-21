@@ -124,7 +124,15 @@ public class Generale extends JFrame {
             Acceuil.ajouterbouton(bouton,0,0,120,50); // Ajout du bouton à la page
             RecuperationBouton listener=new RecuperationBouton(bouton); // Création de l'écouteur avec le bouton
             listener.ajouterListener(Acceuil);
-            Acceuil.getPanel().add(bouton, BorderLayout.NORTH);
+            Acceuil.getacc().add(bouton, BorderLayout.NORTH);
+            Bouton facture=new BoutonAppuie(0,0,50,50,"Facture");
+            JButton fact = facture.CreaBouton(); // Création du bouton
+            Acceuil.ajouterbouton(fact,0,0,120,50); // Ajout du bouton à la page
+            RecuperationBouton listenerfact=new RecuperationBouton(fact); // Création de l'écouteur avec le bouton
+            listener.factureBouton(fact, Acceuil, personne);
+            Acceuil.getacc().add(fact);
+            Acceuil.getacc().setVisible(true);
+            Acceuil.getPanel().add(Acceuil.getacc(),BorderLayout.NORTH);
 
 
             Bouton recherche=new BoutonRecherche(0,0,50,50,"Recherche");

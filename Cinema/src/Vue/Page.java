@@ -58,6 +58,9 @@ public class Page extends JFrame {
 
 
     }
+    public Component getFrame() {
+        return null;
+    }
     public JList<String > getList(){return nameList;}
     public ListPanel getListPanel(){return pan;}
     public JPanel getacc(){return acc;}

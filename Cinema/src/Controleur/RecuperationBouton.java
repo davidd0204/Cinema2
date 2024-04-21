@@ -5,6 +5,7 @@ import Modele.FilmDAOimpl;
 import Modele.ListPanel;
 import Modele.Personne;
 import Vue.*;
+import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -392,6 +393,90 @@ public void Jlistener() {
             }
         });
     }
+    public class factureDemande extends JFrame {
+        public factureDemande(Personne personne, String titreFilm, int nombrePlaces, int prix, int heure) {
+            setTitle("Informations de Facturation");
+            setSize(350, 200);
+            setLayout(new GridLayout(6, 2));
+
+            // Affichage du nom de la personne
+            add(new JLabel("Nom de la personne:"));
+            JLabel nomPersonneLabel = new JLabel(personne.getNom());
+            add(nomPersonneLabel);
+
+            // Affichage du nom du film
+            add(new JLabel("Nom du film:"));
+            JLabel nomFilmLabel = new JLabel(titreFilm);
+            add(nomFilmLabel);
+
+            // Affichage de l'heure du film
+            add(new JLabel("Heure du film:"));
+            JLabel heureFilmLabel = new JLabel(String.valueOf(heure));
+            add(heureFilmLabel);
+
+            // Affichage du nombre de places
+            add(new JLabel("Nombre de places:"));
+            JLabel nombrePlacesLabel = new JLabel(String.valueOf(nombrePlaces));
+            add(nombrePlacesLabel);
+
+            // Affichage du prix
+            add(new JLabel("Prix:"));
+            JLabel prixLabel = new JLabel(String.valueOf(prix) + " euros");
+            add(prixLabel);
+
+            // Bouton pour fermer la fenêtre (optionnel)
+            JButton closeButton = new JButton("Fermer");
+            closeButton.addActionListener(e -> dispose());
+            add(closeButton);
+
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            setVisible(true);
+        }
+    }
+
+
+    public void factureBouton(JButton bouton, Page Acceuil, Personne personne) {
+        bouton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                Connexion sql = null;
+                JList<String> facturesList = new JList<>();
+                try {
+                    sql = new Connexion(); // Tente de créer une connexion
+                    if (personne.getClasse() > 1) {
+
+                        facturesList = sql.lireFacture(personne); // Récupère les factures
+                        EspaceAdmin espace = new EspaceAdmin();
+                        espace.lireFacture(facturesList, personne);
+                        Acceuil.dispose();
+                    } else {
+                        Acceuil.dispose(); // Ferme l'interface actuelle
+                        AfficherInterfaceConnexion a = new AfficherInterfaceConnexion();
+                        a.afficherInterfaceConnexion(new JFrame()); // Ouvre une nouvelle interface de connexion
+                    }
+                } catch (SQLException | ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(Acceuil.getFrame(), "Erreur lors de la connexion : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+    public void BoutonPage(JButton boutonRetour,Personne personne, JFrame frame){
+        boutonRetour.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Fermer la fenêtre des informations utilisateur
+                Generale g = new Generale();
+                try {
+                    g.LancementJeux(personne);
+
+                    frame.dispose();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+        });
+    }
 
     public void ButtonRetourTendance(JButton bouton, JFrame frame){
         bouton.addActionListener(new ActionListener() {
@@ -559,7 +644,7 @@ public void Jlistener() {
                         if(placesDisponibles == 0){JOptionPane.showMessageDialog(null, "Horraire non dispo", "Erreur de validation", JOptionPane.ERROR_MESSAGE);
                             return;}
 
-                        int prix = sql.getnbrfilm(titreFilm, nombrePlaces);
+                        int prix = sql.getnbrfilm(personne, titreFilm, nombrePlaces, heure);
                         String imageUrl = sql.getFilmName(titreFilm,age);
                         if (imageUrl.equals("")) {
                             imageUrl = "/fermer.jpeg";
@@ -574,6 +659,8 @@ public void Jlistener() {
                         if (response == JOptionPane.YES_OPTION) {
                             JOptionPane.showMessageDialog(null, "Votre réservation a été confirmée. La facture vous sera envoyée par email.", "Réservation confirmée", JOptionPane.INFORMATION_MESSAGE);
                             sql.decrementerPlaces(titreFilm, nombrePlaces,heure);
+                            sql.ajouterFacture(personne, titreFilm, nombrePlaces, prix, heure);
+                            new factureDemande(personne, titreFilm, nombrePlaces, prix, heure);
                             Acceuil.dispose();
                             Generale genaral = new Generale();
                             genaral.LancementJeux(personne);

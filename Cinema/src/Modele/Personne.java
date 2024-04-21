@@ -13,7 +13,7 @@ public class Personne {
         this.nom = nom;
         this.idpersonne=idpersonne;
     }
-
+    public int getId(){return idpersonne;}
     public int getClasse() {
         return classe;
     }

@@ -17,9 +17,9 @@ public class Connexion {
     public int getnbrplace;
     String databaseName="cinema";
     String username="root";
-    //String password="";
+    String password="";
 
-    String password="Jack123456";
+   /// String password="Jack123456";
 
 
     public Connexion() throws SQLException, ClassNotFoundException {
@@ -216,14 +216,15 @@ public class Connexion {
         }
     }
 
-    public int getnbrfilm(String nom, int nombreplce) throws SQLException {
+    public int getnbrfilm(Personne personne, String nom, int nombreplce, int heure) throws SQLException {
         int prix = 0;
         int nbrplace;
-        String sqlSelect = "SELECT nbrplace,prix_place FROM film WHERE nom_film = ?";
+        String sqlSelect = "SELECT nbrplace, prix_place FROM film WHERE nom_film = ? AND heure = ?";
 
         // Utilisation d'un PreparedStatement pour éviter les problèmes de sécurité liés aux injections SQL
         PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
         psSelect.setString(1, nom); // Lier le paramètre à la valeur 57
+        psSelect.setInt(2, heure);
 
         // Exécution de la requête et récupération du résultat
         ResultSet rs = psSelect.executeQuery();
@@ -232,7 +233,23 @@ public class Connexion {
             nbrplace = rs.getInt("nbrplace");
             prix = rs.getInt("prix_place");
         }
-        return (prix * nombreplce);
+        //invite
+        if (personne.getClasse() == 0) {
+            return (prix * nombreplce);
+        }
+        //enfant
+        else if (personne.getClasse() == 2) {
+            return (int) ((prix * nombreplce) * 0.5);
+        }
+        //regulier
+        else if (personne.getClasse() == 3) {
+            return (int) ((prix * nombreplce) * 0.9);
+        }
+        //senior
+        else if (personne.getClasse() == 4) {
+            return (int) ((prix * nombreplce) * 0.8);
+        }
+        return 0;
 
 
     }
@@ -653,5 +670,53 @@ public class Connexion {
             throw e; // Propager l'exception après la journalisation
         }
 
+    }
+    public void ajouterFacture(Personne personne, String titreFilm, int nombrePlaces, int prix, int heure) {
+        String sql = "INSERT INTO facture (nom, nom_film, nbrplace, prix, heure, id_personne) VALUES (?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, personne.getNom());
+            pstmt.setString(2, titreFilm);
+            pstmt.setInt(3, nombrePlaces);
+            pstmt.setInt(4, prix);
+            pstmt.setInt(5, heure);
+            pstmt.setInt(6, personne.getId());
+            pstmt.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JList<String>  lireFacture(Personne personne) throws SQLException {
+        String query = "SELECT * FROM facture WHERE id_personne = ?";
+        DefaultListModel<String> model = new DefaultListModel<>();  // Utiliser DefaultListModel pour stocker les données des factures
+        JList<String> mod = new JList<>();
+
+        try{
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            pstmt.setInt(1, personne.getId());  // Assurez-vous que `Personne` a une méthode `getId()`
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // Format: "Heure: [heure], Nom: [nom_personne], Film: [titre_film], Places: [nombre_places], Prix: [prix]"
+                String factures = String.format("Heure: %d, Nom: %s, Film: %s, Places: %d, Prix: %.2f",
+                        rs.getInt("heure"),
+                        rs.getString("nom"),
+                        rs.getString("nom_film"),
+                        rs.getInt("nbrplace"),
+                        rs.getDouble("prix"));
+                model.addElement(factures);  // Ajouter chaque facture au modèle
+            }
+            mod.setModel(model);
+            for(int i =0; i< model.getSize(); i++){
+                System.out.println("facture : "+model.getElementAt(i));
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return mod;
     }
 }
