@@ -44,55 +44,74 @@ public class EspaceAdmin extends JFrame {
     }
 
     public void afficherInterfaceAdmin() {
-        ListPanel liste=new ListPanel();
-        ListPanel liste2=new ListPanel();
+        panel.setBackground(new Color(173, 216, 230));
+        buffer.setBackground(new Color(173, 216, 230));
+        // Titre
+        JLabel titreLabel = new JLabel("Liste des Films");
+        titreLabel.setFont(new Font("Arial",Font.BOLD,15));
+        titreLabel.setBounds(190, 30, 200, 25);
 
+        panel.add(titreLabel, BorderLayout.NORTH);
+
+        ListPanel liste=new ListPanel();
+        liste.setFont(new Font("Arial",Font.BOLD,22));
+        liste.setBounds(190,60,200,25);
         panel.add(liste,BorderLayout.NORTH);
-        RecuperationBouton Jliste=new RecuperationBouton(liste.listeJusteNom());
-        RecuperationBouton Jliste2=new RecuperationBouton(liste2.listeJusteNom());
+
+        //RecuperationBouton Jliste=new RecuperationBouton(liste.listeJusteNom());
         ///Jliste.ListenerJ(liste.listeJusteNom());
+
         Bouton boutonajout = new BoutonAppuie(0,0,50,50,"Ajouter");
         JButton boutonajout1 = boutonajout.CreaBouton();
+        boutonajout1.setFont(new Font("Arial",Font.BOLD,18));
+        boutonajout1.setForeground(new Color(64, 64, 64));
+        boutonajout1.setBackground(Color.orange);
         RecuperationBouton listener2 = new RecuperationBouton(boutonajout1);
         listener2.ButtonAjouterFilm(boutonajout1,frame);
 
         Bouton boutonsupp = new BoutonAppuie(0,0,50,50,"Supprimer");
         JButton boutonsupp1 = boutonsupp.CreaBouton();
-        RecuperationBouton listenersupp = new RecuperationBouton(boutonsupp1);
-       /// listenersupp.boutetList(liste.listeJusteNom(),boutonsupp1,Jliste);
-////
+        boutonsupp1.setFont(new Font("Arial",Font.BOLD,18));
+        boutonsupp1.setForeground(new Color(64, 64, 64));
+        boutonsupp1.setBackground(Color.orange);
+        //RecuperationBouton listenersupp = new RecuperationBouton(boutonsupp1);
+        /// listenersupp.boutetList(liste.listeJusteNom(),boutonsupp1,Jliste);
+        //listenersupp.detectionBoutonSupprimer(liste.listeJusteNom(),boutonsupp1,frame);
 
-
-        Bouton boutonmodif = new BoutonAppuie(0,0,50,50," Modifier  ");
+        Bouton boutonmodif = new BoutonAppuie(0,0,50,50,"Modifier");
         JButton boutonmod = boutonmodif.CreaBouton();
+        boutonmod.setFont(new Font("Arial",Font.BOLD,18));
+        boutonmod.setForeground(new Color(64, 64, 64));
+        boutonmod.setBackground(Color.orange);
         RecuperationBouton listenersmod = new RecuperationBouton(boutonmod);
-
-        listenersupp.setupComponents(liste.listeJusteNom(),boutonsupp1,frame);
-        buffer2.add(liste2);
-        listenersmod.setupComponents2(liste2.listeJusteNom(),boutonmod,frame);
-
+        listenersmod.detectionBoutonModifier(liste.listeJusteNom(),boutonsupp1,boutonmod,frame);
 
         Bouton boutontop = new BoutonAppuie(0,0,50,50,"Tendances");
         JButton boutontendence = boutontop.CreaBouton();
+        boutontendence.setFont(new Font("Arial",Font.BOLD,18));
+        boutontendence.setForeground(new Color(64, 64, 64));
+        boutontendence.setBackground(Color.orange);
         RecuperationBouton listenerstop = new RecuperationBouton(boutontendence);
         listenerstop.ButtonTendance(boutontendence, frame);
 
-
         Bouton boutonRetour = new BoutonAppuie(0,0,50,50,"Retour");
         JButton boutonRetour1 = boutonRetour.CreaBouton();
+        boutonRetour1.setFont(new Font("Arial",Font.BOLD,18));
+        boutonRetour1.setForeground(new Color(64, 64, 64));
+        boutonRetour1.setBackground(Color.orange);
         RecuperationBouton listener = new RecuperationBouton(boutonRetour1);
         listener.ButtonRetour(boutonRetour1,frame);
+
         buffer.add(boutonRetour1);
-        panel.add(boutonsupp1);
+        buffer.add(boutonsupp1);
         buffer.add(boutonajout1);
-        buffer2.add(boutonmod);
+        buffer.add(boutonmod);
+        //buffer.add(boutonsuppr1);
         buffer.add(boutontendence);
 
         buffer.setVisible(true);
-        frame.add(buffer2,BorderLayout.SOUTH);
         frame.add(buffer,BorderLayout.CENTER);
         frame.add(panel,BorderLayout.NORTH);
-        frame.pack();
 
 
 

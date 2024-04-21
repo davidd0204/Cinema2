@@ -17,9 +17,9 @@ public class Connexion {
     public int getnbrplace;
     String databaseName="cinema";
     String username="root";
-    String password="";
+    //String password="";
 
-   /// String password="Jack123456";
+    String password="Jack123456";
 
 
     public Connexion() throws SQLException, ClassNotFoundException {
@@ -49,7 +49,7 @@ public class Connexion {
         stmt = conn.createStatement();
     }
     public void suppFilm(String nom,int heure) throws SQLException {
-        String sqlSelect = "SELECT image_film FROM film WHERE nom_film = ? AND heure = ?";
+        String sqlSelect = "SELECT nom_film FROM film WHERE nom_film = ? AND heure = ?";
 
         // Utilisation d'un PreparedStatement pour éviter les problèmes de sécurité liés aux injections SQL
         PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
@@ -64,9 +64,10 @@ public class Connexion {
             psSelect.close();
 
             // Si le film existe, exécuter une instruction DELETE pour le supprimer
-            String sqlDelete = "DELETE FROM film WHERE nom_film = ?";
+            String sqlDelete = "DELETE FROM film WHERE nom_film = ? AND heure=?";
             PreparedStatement psDelete = conn.prepareStatement(sqlDelete);
             psDelete.setString(1, nom);
+            psDelete.setInt(2,heure);
             int rowsDeleted = psDelete.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("Le film a été supprimé avec succès.");

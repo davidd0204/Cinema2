@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class RecuperationBouton {
     private JButton JB;
     private JList liste;
-    String selectedName=null;
+    String selectedName;
     private MouseListener currentMouseListener;
     public RecuperationBouton(JButton bouton) {
         this.JB = bouton;
@@ -234,10 +234,15 @@ public void Jlistener() {
                 try {
                     Connexion v = new Connexion();
                     if(v.verificationInscriptionFilm(nomFilm,auteurFilm,nbPlaceFilm,lienImageFilm,prixFilm,resumeFilm,noteFilm)){
+                        if(v.verificationDoublonsInscriptionFilm(nomFilm,horaire)) {
                         int nbPlaceFilm1 = Integer.parseInt(nbPlace.getText());
                         int prixFilm1 = Integer.parseInt(prix.getText());
                         float noteFilm1 = Float.parseFloat(note.getText());
                         v.ModificationFilm(nomFilm,auteurFilm,nbPlaceFilm1,lienImageFilm,prixFilm1,resumeFilm,noteFilm1,horaire,nomFilmBase,heureFilmBase,frame);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Film déjà existant à cette horaire,\n Veuillez changer d'horaire.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs pour pouvoir ajouter un film.", "Erreur d'ajoute d'un film", JOptionPane.ERROR_MESSAGE);
@@ -514,7 +519,8 @@ public void Jlistener() {
             }
         });
     }
-    public void setupComponents(JList<String> list, JButton button, JFrame frame) {
+
+    public void detectionBoutonModifier(JList<String> list,JButton buttonSupp, JButton buttonModifier, JFrame frame) {
         // Ajouter un MouseListener à la liste pour détecter et stocker la sélection
         list.addMouseListener(new MouseAdapter() {
             @Override
@@ -523,14 +529,51 @@ public void Jlistener() {
                     int index = list.locationToIndex(e.getPoint());
                     if (index >= 0) {
                         selectedName = list.getModel().getElementAt(index);
-                        System.out.println("Selected: " + selectedName);
+                        System.out.println("Selected 1: " + selectedName);
                     }
                 }
             }
         });
 
         // Ajouter un ActionListener au bouton pour effectuer l'action avec l'élément sélectionné
-        button.addActionListener(new ActionListener() {
+        buttonModifier.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Selected 2: " + selectedName);
+
+                if (selectedName != null) { // Vérifie qu'un nom a été sélectionné
+                    try {
+                        Connexion sql = new Connexion();
+                        // Décommentez la ligne suivante pour supprimer le film sélectionné de la base de données
+                        // sql.suppFilm(selectedName);
+                        //JOptionPane.showMessageDialog(null, "Action effectuée pour : " + selectedName);
+                        //frame.dispose();
+                        if (selectedName != null && !selectedName.isEmpty()) {
+                            String[] parts = selectedName.split("-"); // Séparation par espace
+                            if (parts.length >= 2) {
+                                String firstName = parts[0]; // Premier mot
+                                int heure = Integer.parseInt(parts[1]); // Deuxième mot
+                                //sql.suppFilm(firstName,heure);
+                                sql.modifierFilm(firstName,heure,frame);
+                                frame.dispose();
+                            } else {
+                                System.out.println("Le nom sélectionné ne contient pas deux mots.");
+                            }
+                        }
+
+                        //EspaceAdmin espace = new EspaceAdmin();
+                        //espace.afficherInterfaceAdmin();
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, "Error connecting to database: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace(); // Considérez de loguer ceci de manière appropriée
+                    }
+                    selectedName = null; // Réinitialiser la sélection après l'action
+                } else {
+                    JOptionPane.showMessageDialog(null, "Aucun film sélectionné.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        buttonSupp.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
                 if (selectedName != null) { // Vérifie qu'un nom a été sélectionné
@@ -555,59 +598,6 @@ public void Jlistener() {
 
                         EspaceAdmin espace = new EspaceAdmin();
                         espace.afficherInterfaceAdmin();
-                    } catch (SQLException | ClassNotFoundException ex) {
-                        JOptionPane.showMessageDialog(null, "Error connecting to database: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-                        ex.printStackTrace(); // Considérez de loguer ceci de manière appropriée
-                    }
-                    selectedName = null; // Réinitialiser la sélection après l'action
-                } else {
-                    JOptionPane.showMessageDialog(null, "Aucun film sélectionné.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-    }
-
-    public void setupComponents2(JList<String> list, JButton button, JFrame frame) {
-        // Ajouter un MouseListener à la liste pour détecter et stocker la sélection
-        list.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) { // Un seul clic pour sélectionner
-                    int index = list.locationToIndex(e.getPoint());
-                    if (index >= 0) {
-                        selectedName = list.getModel().getElementAt(index);
-                        System.out.println("Selected: " + selectedName);
-                    }
-                }
-            }
-        });
-
-        // Ajouter un ActionListener au bouton pour effectuer l'action avec l'élément sélectionné
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                if (selectedName != null) { // Vérifie qu'un nom a été sélectionné
-                    try {
-                        Connexion sql = new Connexion();
-                        // Décommentez la ligne suivante pour supprimer le film sélectionné de la base de données
-                        // sql.suppFilm(selectedName);
-                        //JOptionPane.showMessageDialog(null, "Action effectuée pour : " + selectedName);
-                        //frame.dispose();
-                        if (selectedName != null && !selectedName.isEmpty()) {
-                            String[] parts = selectedName.split("-"); // Séparation par espace
-                            if (parts.length >= 2) {
-                                String firstName = parts[0]; // Premier mot
-                                int heure = Integer.parseInt(parts[1]); // Deuxième mot
-                                //sql.suppFilm(firstName,heure);
-                                sql.modifierFilm(firstName,heure,frame);
-                                frame.dispose();
-                            } else {
-                                System.out.println("Le nom sélectionné ne contient pas deux mots.");
-                            }
-                        }
-
-                        //EspaceAdmin espace = new EspaceAdmin();
-                        //espace.afficherInterfaceAdmin();
                     } catch (SQLException | ClassNotFoundException ex) {
                         JOptionPane.showMessageDialog(null, "Error connecting to database: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
                         ex.printStackTrace(); // Considérez de loguer ceci de manière appropriée
